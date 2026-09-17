@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.env
+.env.*
+local_data/
+*.db
+*.sqlite
+*.sqlite-*
+REVIEW_PACKET.md
+REVIEW_DIFF.txt
+RP_BODY.md
