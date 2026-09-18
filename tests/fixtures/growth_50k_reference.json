@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "fixture_id": "growth-50k-reference-v1",
+  "fixture_id": "growth-50k-reference-v2",
   "source_url": "https://ftmo.com/en/futures/trading-objectives-and-rules/",
   "source_observed_on": "2026-09-17",
   "cases": [
@@ -325,7 +325,7 @@
       "id": "fees-change-consistency",
       "kind": "consistency_fees",
       "origin": "synthetic_boundary",
-      "decision": "human_decision_pending",
+      "decision": "human_accepted_lab_convention",
       "inputs": {
         "gross_days": [
           "1200.00",
@@ -339,13 +339,13 @@
         ]
       },
       "expected": {
-        "proposed_net_days": [
+        "gross_satisfied": true,
+        "net_days": [
           "1200.00",
           "900.00",
           "870.00"
         ],
-        "proposed_satisfied": false,
-        "gross_satisfied": true
+        "satisfied": false
       }
     },
     {
@@ -643,6 +643,39 @@
       },
       "expected": {
         "state": "data_unavailable"
+      }
+    },
+    {
+      "id": "entry-fees-on-open-positions",
+      "kind": "consistency_fees",
+      "origin": "synthetic_boundary",
+      "decision": "human_accepted_lab_convention",
+      "inputs": {
+        "gross_days": [
+          "1200.00",
+          "900.00",
+          "900.00"
+        ],
+        "fees_by_day": [
+          "0.00",
+          "0.00",
+          "30.00"
+        ],
+        "open_positions_by_day": [
+          0,
+          0,
+          1
+        ],
+        "fee_description": "Entry fee on a new position still open at session close"
+      },
+      "expected": {
+        "gross_satisfied": true,
+        "net_days": [
+          "1200.00",
+          "900.00",
+          "870.00"
+        ],
+        "satisfied": false
       }
     }
   ]

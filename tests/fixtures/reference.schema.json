@@ -13,7 +13,7 @@
       "const": 1
     },
     "fixture_id": {
-      "const": "growth-50k-reference-v1"
+      "const": "growth-50k-reference-v2"
     },
     "source_url": {
       "const": "https://ftmo.com/en/futures/trading-objectives-and-rules/"
@@ -67,7 +67,7 @@
           "decision": {
             "enum": [
               "proposed_for_review",
-              "human_decision_pending"
+              "human_accepted_lab_convention"
             ]
           },
           "inputs": {
@@ -78,7 +78,877 @@
             "type": "object",
             "minProperties": 1
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "floor_sequence"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "initial": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "prior_closes": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                        "not": {
+                          "pattern": "[\\r\\n]"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "initial",
+                    "prior_closes"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "session_start_floors": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                        "not": {
+                          "pattern": "[\\r\\n]"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "session_start_floors"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "equity_boundary"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "floor": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "equity": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    }
+                  },
+                  "required": [
+                    "floor",
+                    "equity"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "breached": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "breached"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "fee_equity"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "cash_before_fee": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "fee": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "unrealized": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "floor": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    }
+                  },
+                  "required": [
+                    "cash_before_fee",
+                    "fee",
+                    "unrealized",
+                    "floor"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "equity": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "breached": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "equity",
+                    "breached"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "floor_timing"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "active_floor": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "intraday_balance": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "closing_balance": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    }
+                  },
+                  "required": [
+                    "active_floor",
+                    "intraday_balance",
+                    "closing_balance"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "floor_during_session": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "floor_at_close": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "floor_next_start": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    }
+                  },
+                  "required": [
+                    "floor_during_session",
+                    "floor_at_close",
+                    "floor_next_start"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "breach_history"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "floor": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "equities": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                        "not": {
+                          "pattern": "[\\r\\n]"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "floor",
+                    "equities"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "breached": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "breached"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "target"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "balance": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "open_positions": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "after_session_close": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "balance",
+                    "open_positions",
+                    "after_session_close"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "target_condition_met": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "target_condition_met"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "consistency"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "closed_days": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                        "not": {
+                          "pattern": "[\\r\\n]"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "closed_days"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "best_day": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "total": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "satisfied": {
+                      "type": "boolean"
+                    },
+                    "breached": {
+                      "type": "boolean"
+                    },
+                    "share": {
+                      "type": "null"
+                    },
+                    "reason": {
+                      "const": "nonpositive_total_profit"
+                    }
+                  },
+                  "required": [
+                    "best_day",
+                    "total",
+                    "satisfied",
+                    "breached"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "consistency_fees"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "gross_days": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                        "not": {
+                          "pattern": "[\\r\\n]"
+                        }
+                      }
+                    },
+                    "fees_by_day": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                        "not": {
+                          "pattern": "[\\r\\n]"
+                        }
+                      }
+                    },
+                    "open_positions_by_day": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "fee_description": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "gross_days",
+                    "fees_by_day"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "net_days": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                        "not": {
+                          "pattern": "[\\r\\n]"
+                        }
+                      }
+                    },
+                    "satisfied": {
+                      "type": "boolean"
+                    },
+                    "gross_satisfied": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "net_days",
+                    "satisfied",
+                    "gross_satisfied"
+                  ]
+                },
+                "decision": {
+                  "const": "human_accepted_lab_convention"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "daily_loss"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "session_loss": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "equity": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "floor": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{2}$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    }
+                  },
+                  "required": [
+                    "session_loss",
+                    "equity",
+                    "floor"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "daily_loss_limit": {
+                      "type": "null"
+                    },
+                    "drawdown_breached": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "daily_loss_limit",
+                    "drawdown_breached"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "exposure"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "mini_contracts": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "micro_contracts": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "mini_contracts",
+                    "micro_contracts"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "mini_equivalent": {
+                      "type": "string",
+                      "pattern": "^(0|[1-9][0-9]*)\\.[0-9]+$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "within_cap": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "mini_equivalent",
+                    "within_cap"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "signed_exposure"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "mini_positions_by_contract": {
+                      "type": "object",
+                      "minProperties": 1,
+                      "additionalProperties": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "required": [
+                    "mini_positions_by_contract"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "mini_equivalent": {
+                      "type": "string",
+                      "pattern": "^(0|[1-9][0-9]*)\\.[0-9]+$",
+                      "not": {
+                        "pattern": "[\\r\\n]"
+                      }
+                    },
+                    "within_cap": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "mini_equivalent",
+                    "within_cap"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "session_window"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "session_id": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "timezone": {
+                      "const": "America/New_York"
+                    }
+                  },
+                  "required": [
+                    "session_id",
+                    "timezone"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "start_utc": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "Z$"
+                    },
+                    "close_utc": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "Z$"
+                    }
+                  },
+                  "required": [
+                    "start_utc",
+                    "close_utc"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "session_boundary"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "timestamp_utc": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "Z$"
+                    },
+                    "event_type": {
+                      "enum": [
+                        "Fill",
+                        "SessionClose"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "timestamp_utc",
+                    "event_type"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "session_or_disposition": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        {
+                          "const": "quarantine"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "session_or_disposition"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "data_quality"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "inputs": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "condition": {
+                      "enum": [
+                        "missing_instrument_spec",
+                        "missing_position_mark",
+                        "missing_calendar",
+                        "idempotency_conflict"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "condition"
+                  ]
+                },
+                "expected": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "state": {
+                      "const": "data_unavailable"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "decision": {
+                  "const": "proposed_for_review"
+                }
+              }
+            }
+          }
+        ]
       }
     }
   },

@@ -25,9 +25,16 @@ eligibility. See ADR 002 for the proposed boundary contract.
 
 ## Candidate and version policy
 
-File: `rules/ftmo_futures_growth_evaluation_50k_2026-09-17.yaml`.
+Active file: `rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.2.yaml`.
 ID: `ftmo-futures-growth-evaluation-50k`.
-Version: `2026-09-17-candidate.1`. Supersedes: none. Review status: pending.
+Version: `2026-09-18-candidate.2`. Supersedes: `2026-09-17-candidate.1`.
+Review status: pending. Created 2026-09-18 to record the 2026-09-17 human decision;
+source observation is still 2026-09-17, not a new source verification.
+
+Historical file: `rules/ftmo_futures_growth_evaluation_50k_2026-09-17.yaml`,
+version `2026-09-17-candidate.1`, is preserved without changes. Its fee basis is
+unresolved and it must not be used for eligibility. The schema validates both
+versions and rejects combinations of fields from different versions.
 Exact-byte SHA-256 is recorded in `tests/fixtures/artifacts.sha256.json` and the
 review packet. Run `futures-lab fingerprint <path>` to reproduce it.
 
@@ -44,10 +51,10 @@ synthetic boundary extensions. The floor sequence is 48000 → 49000 → 49000 �
 consistency objective; a total of 5000 with best day 2000 meets it. Official
 exposure examples include 4 standard + 10 micro and 2 mini + 30 micro.
 
-- **Lab interpretation accepted:** ADR 003, net realized profit minus fees posted
+- **Lab interpretation accepted:** ADR 003, realized gross P&L minus fees posted
   in the session, including entry fees; human approved 2026-09-17. Candidate.1
-  predates approval. A new candidate.2 and synchronized fixtures/schema are the
-  first remaining implementation step; independent review is still pending.
+  predates approval. Candidate.2 and synchronized fixtures/schema record the
+  accepted convention; independent review is still pending.
 - **Scope acceptance:** 50K Evaluation; human pending.
 - **Independent source/contract review:** Claude pending; no findings received.
 - **Calendar:** supply a pinned session/holiday schedule before real-data use;

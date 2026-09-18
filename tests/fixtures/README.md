@@ -8,8 +8,13 @@ license restrictions; they do not license the rest of this repository.
 `growth_50k_reference.json` contains hand-selected P1 acceptance vectors.
 `official_numeric_example` marks numeric examples transcribed from the rules
 source in RULES_REGISTER; `synthetic_boundary` marks lab extensions. These are
-expected results, not output from an implemented evaluator. Pending ADR 003
-vectors carry `human_decision_pending`. P0 validates artifacts, not rule outcomes.
+expected results, not output from an implemented evaluator. ADR 003 fee vectors
+carry `human_accepted_lab_convention`; all others remain proposed for review.
+P0 validates contracts and provenance, not financial engine outcomes.
+
+The active v2 fixtures select candidate.2, incorporating the 2026-09-17 human
+decision. Original v1 fixture bytes are preserved by the checkpoint Git tag.
+The historical candidate.1 manifest remains unchanged in the current tree.
 
 `round_trip.json` is a normalized event trace with this authoring recipe:
 

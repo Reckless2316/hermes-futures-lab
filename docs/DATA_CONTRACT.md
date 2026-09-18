@@ -58,7 +58,11 @@ P1 uses FIFO lots within each instrument, handles partial exits and reversals,
 and computes gross realized P&L as price movement in integer ticks times exact
 tick value and closed quantity. Cash = initial balance + gross realized P&L −
 posted fees. Equity = cash + unrealized P&L. Fees are never deducted twice.
-Commission assignment for consistency is proposed in ADR 003 and remains open.
+Commission assignment for consistency follows the human-accepted ADR 003 lab
+convention: subtract all fees posted in the session, including entry fees for
+positions still open. Independent review and account-terms verification remain
+separate. The P0 schemas cover only the authored trace subset, not every event
+type or an operational importer; P1 must implement the wider contract above.
 
 After each financial event, evaluate equity and exposure. Every required mark
 must be present at the valuation instant; mark freshness/coverage is explicit.

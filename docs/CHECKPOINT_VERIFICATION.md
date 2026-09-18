@@ -1,5 +1,8 @@
 # P0 checkpoint verification — 2026-09-17
 
+Historical record for tag `checkpoint/p0-2026-09-17`; current checks are in
+[P0_VALIDATION.md](P0_VALIDATION.md).
+
 This record describes local artifact checks, not the full P0 gate or P1 financial
 tests. Run from the P0 worktree. Python 3.11.16; uv 0.12.7.
 

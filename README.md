@@ -7,8 +7,8 @@ The initial scope is **50K FTMO Futures Growth Evaluation**.
 **P0 implementation prepared; acceptance pending.** This version provides a CLI
 skeleton, data contract, candidate rules manifest, threat model, decision records
 and synthetic reference cases. It does not calculate P&L or evaluation status.
-Claude's independent review and human scope/interpretation decisions are required
-before P1. See [P0 acceptance](docs/P0_ACCEPTANCE.md).
+The fee convention was accepted by the human; Claude's review and human scope
+acceptance are required before P1. See [P0 acceptance](docs/P0_ACCEPTANCE.md).
 
 ## Run from this checkout
 
@@ -17,7 +17,8 @@ Python 3.11 and `uv` are required for the locked development environment:
 ```bash
 uv sync --locked --python 3.11
 uv run --locked futures-lab status
-uv run --locked futures-lab fingerprint rules/ftmo_futures_growth_evaluation_50k_2026-09-17.yaml
+uv run --locked futures-lab fingerprint rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.2.yaml
+uv run --locked python scripts/verify_p0_artifacts.py
 uv run --locked python -m unittest discover -s tests -v
 uv build
 ```

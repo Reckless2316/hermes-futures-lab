@@ -10,7 +10,7 @@ The consistency example uses daily closed profits, without specifying how entry
 fees on still-open trades or subsequently posted fees are assigned to days.
 Those choices can change eligibility. No account-specific agreement was supplied.
 
-Proposed lab convention: record every fee once, at its event timestamp. Cash
+Accepted lab convention: record every fee once, at its event timestamp. Cash
 balance is initial cash plus realized gross P&L minus posted fees. Equity is that
 net cash balance plus marked unrealized P&L; do not subtract fees a second time.
 Closed daily profit for consistency is realized gross P&L minus **all fees posted
@@ -28,9 +28,9 @@ Human decision, 2026-09-17, in this implementation session:
 above is therefore accepted for lab accounting. This is not verification of
 account-specific FTMO terms. Independent review remains required.
 
-Checkpoint synchronization note: candidate.1 was authored before this decision
-and retains `consistency_profit_basis: null`. Its bytes must remain unchanged.
-On resume, create candidate.2 with the accepted convention, update the schema,
-reference-case decision metadata, trace rules selection, artifact hashes and
-rules register together. Fee-sensitive vectors still carry their pre-decision
-metadata in this checkpoint. Do not promote candidate.1 or use it for eligibility.
+Implementation record, 2026-09-18: candidate.1 remains byte-identical to the
+checkpoint. New `2026-09-18-candidate.2` records this lab convention and the human
+decision date. Its external source observation remains 2026-09-17 and independent
+review remains pending. The schema, active trace, reference decision metadata and
+artifact inventory now refer to candidate.2. Reviewed promotion must create a
+new file/version; neither candidate is an accepted evaluation ruleset.

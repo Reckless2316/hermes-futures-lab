@@ -1,152 +1,330 @@
 {
-  "type": "object",
-  "additionalProperties": false,
-  "required": [
-    "schema_version",
-    "id",
-    "rules_version",
-    "review_status",
-    "stage",
-    "product",
-    "currency",
-    "initial_balance",
-    "profit_target",
-    "profit_target_comparison",
-    "assessment",
-    "drawdown",
-    "daily_loss",
-    "consistency",
-    "max_contracts_mini_equivalent",
-    "micro_to_mini_ratio",
-    "minimum_trading_days",
-    "trading_day_timezone",
-    "session_start_local",
-    "session_close_local",
-    "source_url",
-    "comparison_source_url",
-    "verified_on",
-    "effective_at_utc"
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "P0 candidate manifests; both await independent review",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/candidate1"
+    },
+    {
+      "$ref": "#/$defs/candidate2"
+    }
   ],
-  "properties": {
-    "schema_version": {
-      "const": 1
-    },
-    "id": {
-      "const": "ftmo-futures-growth-evaluation-50k"
-    },
-    "rules_version": {
-      "const": "2026-09-17-candidate.1"
-    },
-    "review_status": {
-      "const": "pending"
-    },
-    "stage": {
-      "const": "evaluation"
-    },
-    "product": {
-      "const": "growth"
-    },
-    "currency": {
-      "const": "USD"
-    },
-    "initial_balance": {
-      "const": "50000.00"
-    },
-    "profit_target": {
-      "const": "3000.00"
-    },
-    "profit_target_comparison": {
-      "const": "balance_gte_initial_plus_target"
-    },
-    "assessment": {
-      "const": "after_session_close_with_no_open_positions"
-    },
-    "drawdown": {
+  "$defs": {
+    "candidate1": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "amount",
-        "basis",
-        "update",
-        "lock_at_initial_balance",
-        "violation_when"
+        "schema_version",
+        "id",
+        "rules_version",
+        "review_status",
+        "stage",
+        "product",
+        "currency",
+        "initial_balance",
+        "profit_target",
+        "profit_target_comparison",
+        "assessment",
+        "drawdown",
+        "daily_loss",
+        "consistency",
+        "max_contracts_mini_equivalent",
+        "micro_to_mini_ratio",
+        "minimum_trading_days",
+        "trading_day_timezone",
+        "session_start_local",
+        "session_close_local",
+        "source_url",
+        "comparison_source_url",
+        "verified_on",
+        "effective_at_utc"
       ],
       "properties": {
-        "amount": {
-          "const": "2000.00"
+        "schema_version": {
+          "const": 1
         },
-        "basis": {
-          "const": "highest_prior_session_closing_balance"
+        "id": {
+          "const": "ftmo-futures-growth-evaluation-50k"
         },
-        "update": {
-          "const": "next_session_start"
+        "rules_version": {
+          "const": "2026-09-17-candidate.1"
         },
-        "lock_at_initial_balance": {
-          "const": true
+        "review_status": {
+          "const": "pending"
         },
-        "violation_when": {
-          "const": "equity_lte_limit"
-        }
-      }
-    },
-    "daily_loss": {
-      "const": null
-    },
-    "consistency": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "best_closed_profit_day_max_share",
-        "outcome_when_exceeded",
-        "consistency_profit_basis",
-        "pending_decision"
-      ],
-      "properties": {
-        "best_closed_profit_day_max_share": {
-          "const": "0.40"
+        "stage": {
+          "const": "evaluation"
         },
-        "outcome_when_exceeded": {
-          "const": "not_yet_eligible"
+        "product": {
+          "const": "growth"
         },
-        "consistency_profit_basis": {
+        "currency": {
+          "const": "USD"
+        },
+        "initial_balance": {
+          "const": "50000.00"
+        },
+        "profit_target": {
+          "const": "3000.00"
+        },
+        "profit_target_comparison": {
+          "const": "balance_gte_initial_plus_target"
+        },
+        "assessment": {
+          "const": "after_session_close_with_no_open_positions"
+        },
+        "drawdown": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "amount",
+            "basis",
+            "update",
+            "lock_at_initial_balance",
+            "violation_when"
+          ],
+          "properties": {
+            "amount": {
+              "const": "2000.00"
+            },
+            "basis": {
+              "const": "highest_prior_session_closing_balance"
+            },
+            "update": {
+              "const": "next_session_start"
+            },
+            "lock_at_initial_balance": {
+              "const": true
+            },
+            "violation_when": {
+              "const": "equity_lte_limit"
+            }
+          }
+        },
+        "daily_loss": {
           "const": null
         },
-        "pending_decision": {
-          "const": "ADR-003"
+        "consistency": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "best_closed_profit_day_max_share",
+            "outcome_when_exceeded",
+            "consistency_profit_basis",
+            "pending_decision"
+          ],
+          "properties": {
+            "best_closed_profit_day_max_share": {
+              "const": "0.40"
+            },
+            "outcome_when_exceeded": {
+              "const": "not_yet_eligible"
+            },
+            "consistency_profit_basis": {
+              "const": null
+            },
+            "pending_decision": {
+              "const": "ADR-003"
+            }
+          }
+        },
+        "max_contracts_mini_equivalent": {
+          "const": "5.0"
+        },
+        "micro_to_mini_ratio": {
+          "const": "0.1"
+        },
+        "minimum_trading_days": {
+          "const": 0
+        },
+        "trading_day_timezone": {
+          "const": "America/New_York"
+        },
+        "session_start_local": {
+          "const": "18:00:00"
+        },
+        "session_close_local": {
+          "const": "16:10:00"
+        },
+        "source_url": {
+          "const": "https://ftmo.com/en/futures/trading-objectives-and-rules/"
+        },
+        "comparison_source_url": {
+          "const": "https://ftmo.com/en/futures/comparison-table/"
+        },
+        "verified_on": {
+          "const": "2026-09-17"
+        },
+        "effective_at_utc": {
+          "const": null
         }
       }
     },
-    "max_contracts_mini_equivalent": {
-      "const": "5.0"
-    },
-    "micro_to_mini_ratio": {
-      "const": "0.1"
-    },
-    "minimum_trading_days": {
-      "const": 0
-    },
-    "trading_day_timezone": {
-      "const": "America/New_York"
-    },
-    "session_start_local": {
-      "const": "18:00:00"
-    },
-    "session_close_local": {
-      "const": "16:10:00"
-    },
-    "source_url": {
-      "const": "https://ftmo.com/en/futures/trading-objectives-and-rules/"
-    },
-    "comparison_source_url": {
-      "const": "https://ftmo.com/en/futures/comparison-table/"
-    },
-    "verified_on": {
-      "const": "2026-09-17"
-    },
-    "effective_at_utc": {
-      "const": null
+    "candidate2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "id",
+        "rules_version",
+        "review_status",
+        "stage",
+        "product",
+        "currency",
+        "initial_balance",
+        "profit_target",
+        "profit_target_comparison",
+        "assessment",
+        "drawdown",
+        "daily_loss",
+        "consistency",
+        "max_contracts_mini_equivalent",
+        "micro_to_mini_ratio",
+        "minimum_trading_days",
+        "trading_day_timezone",
+        "session_start_local",
+        "session_close_local",
+        "source_url",
+        "comparison_source_url",
+        "verified_on",
+        "effective_at_utc",
+        "supersedes_rules_version"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "id": {
+          "const": "ftmo-futures-growth-evaluation-50k"
+        },
+        "rules_version": {
+          "const": "2026-09-18-candidate.2"
+        },
+        "review_status": {
+          "const": "pending"
+        },
+        "stage": {
+          "const": "evaluation"
+        },
+        "product": {
+          "const": "growth"
+        },
+        "currency": {
+          "const": "USD"
+        },
+        "initial_balance": {
+          "const": "50000.00"
+        },
+        "profit_target": {
+          "const": "3000.00"
+        },
+        "profit_target_comparison": {
+          "const": "balance_gte_initial_plus_target"
+        },
+        "assessment": {
+          "const": "after_session_close_with_no_open_positions"
+        },
+        "drawdown": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "amount",
+            "basis",
+            "update",
+            "lock_at_initial_balance",
+            "violation_when"
+          ],
+          "properties": {
+            "amount": {
+              "const": "2000.00"
+            },
+            "basis": {
+              "const": "highest_prior_session_closing_balance"
+            },
+            "update": {
+              "const": "next_session_start"
+            },
+            "lock_at_initial_balance": {
+              "const": true
+            },
+            "violation_when": {
+              "const": "equity_lte_limit"
+            }
+          }
+        },
+        "daily_loss": {
+          "const": null
+        },
+        "consistency": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "best_closed_profit_day_max_share",
+            "outcome_when_exceeded",
+            "consistency_profit_basis",
+            "pending_decision",
+            "decision_record",
+            "decision_status",
+            "decision_on"
+          ],
+          "properties": {
+            "best_closed_profit_day_max_share": {
+              "const": "0.40"
+            },
+            "outcome_when_exceeded": {
+              "const": "not_yet_eligible"
+            },
+            "consistency_profit_basis": {
+              "const": "realized_gross_pnl_minus_all_fees_posted_in_session"
+            },
+            "pending_decision": {
+              "const": null
+            },
+            "decision_record": {
+              "const": "ADR-003"
+            },
+            "decision_status": {
+              "const": "human_accepted_lab_convention"
+            },
+            "decision_on": {
+              "const": "2026-09-17"
+            }
+          }
+        },
+        "max_contracts_mini_equivalent": {
+          "const": "5.0"
+        },
+        "micro_to_mini_ratio": {
+          "const": "0.1"
+        },
+        "minimum_trading_days": {
+          "const": 0
+        },
+        "trading_day_timezone": {
+          "const": "America/New_York"
+        },
+        "session_start_local": {
+          "const": "18:00:00"
+        },
+        "session_close_local": {
+          "const": "16:10:00"
+        },
+        "source_url": {
+          "const": "https://ftmo.com/en/futures/trading-objectives-and-rules/"
+        },
+        "comparison_source_url": {
+          "const": "https://ftmo.com/en/futures/comparison-table/"
+        },
+        "verified_on": {
+          "const": "2026-09-17"
+        },
+        "effective_at_utc": {
+          "const": null
+        },
+        "supersedes_rules_version": {
+          "const": "2026-09-17-candidate.1"
+        }
+      }
     }
-  },
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "P0 50K Growth Evaluation candidate contract; new versions require schema review"
+  }
 }

@@ -7,11 +7,11 @@ Branch: `feat/p0-specification`. Rules source observed: 2026-09-17.
 
 | Assertion | Evidence | Disposition |
 | --- | --- | --- |
-| Package installs; CLI works independently of Hermes/LLMs | pyproject.toml, locked environment, status/fingerprint commands | Verify in local review packet |
+| Package installs; CLI works independently of Hermes/LLMs | pyproject.toml, locked environment, status/fingerprint commands | Passed local checks; see P0_VALIDATION.md |
 | Data contract specifies identity, exact arithmetic, sessions and corrections | DATA_CONTRACT.md; synthetic normalized trace | Prepared for review |
 | Rule provenance and version are explicit | RULES_REGISTER.md, candidate YAML, strict schema, artifact hashes | Prepared; independent review pending |
 | Threat boundaries and future gates are explicit | THREAT_MODEL.md and AGENTS.md | Prepared for review |
-| Rule interpretations are documented before calculation code | ADRs 001–003 | ADR 003 accepted by human; candidate.2 synchronization and Claude review pending |
+| Rule interpretations are documented before calculation code | ADRs 001–003 | ADR 003 accepted by human; candidate.2 synchronized; Claude review pending |
 | P1 has official examples and boundary expectations | growth_50k_reference.json, round_trip.json | Contract validation only; evaluator absent |
 | Claude finds no unresolved ambiguity changing pass/fail | Frozen diff and REVIEW_PACKET.md | **Pending external review** |
 | Human accepts 50K Evaluation scope | Human decision recorded in ticket/review disposition | **Pending** |
