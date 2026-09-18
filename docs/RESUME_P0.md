@@ -12,8 +12,10 @@ The original checkpoint and portable bundle remain unchanged.
 - Origin: `https://github.com/Reckless2316/hermes-futures-lab.git`.
 - GitHub account verified as `Reckless2316` on 2026-09-18.
 - GitHub now reports **public**, changed from private at the original checkpoint.
-  A question about publishing publicly is pending. Do not push until the human
-  answers, or they restore private visibility and the private workflow applies.
+  The human explicitly approved pushing the branch and opening its draft PR
+  publicly on 2026-09-18. Do not ask for that authorization again.
+- P0 tracking issue: https://github.com/Reckless2316/hermes-futures-lab/issues/1.
+  The local REVIEW_PACKET.md records the draft PR URL and frozen head SHA.
 
 ```bash
 cd /home/reckless/projects/hermes-futures-lab/.worktrees/p0-specification
@@ -47,17 +49,14 @@ dependencies. The `.venv`, build outputs and caches are ignored and disposable.
 
 ## Remaining handoff
 
-1. Resolve the repository visibility question before publishing. The remote and
-   authenticated account must be verified again immediately before pushing.
-2. Prepare/update local REVIEW_PACKET.md, REVIEW_DIFF.txt and PR_BODY.md with
-   frozen base/head SHAs, hashes, exact checks and limitations. Push the topic
-   branch and open a draft PR once the visibility decision permits it. Link the
-   P0 issue if created; no existing issue/PR was found when resuming.
-3. Give Claude Desktop the packet/diff using docs/CLAUDE_OPERATOR.md. Claude has
-   not reviewed this implementation; there are no findings or approvals to claim.
-4. Record the returned findings and resolve them on this branch. Obtain human
-   acceptance of 50K Growth Evaluation scope and the P0 gate. Do not merge or
-   begin P1 before acceptance. CI is not configured (scheduled for P1).
+1. Give Claude Desktop the frozen REVIEW_PACKET.md and REVIEW_DIFF.txt using
+   docs/CLAUDE_OPERATOR.md. The public draft PR is also available via
+   `gh pr view feat/p0-specification --repo Reckless2316/hermes-futures-lab`.
+   Claude has not reviewed this implementation; no findings or approvals exist.
+2. Record returned findings and resolve them on this branch. Update the packet
+   and draft PR to the new head after any fixes, then request independent review.
+3. Obtain human acceptance of 50K Growth Evaluation scope and the P0 gate. Do not
+   merge or begin P1 before acceptance. CI is not configured (scheduled for P1).
 
 The current review packet, when present, is a local gitignored handoff artifact;
 it records the exact frozen head and publication status. No secrets, real account
