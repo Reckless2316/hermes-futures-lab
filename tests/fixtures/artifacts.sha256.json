@@ -1,0 +1,9 @@
+{
+  "rules/ftmo_futures_growth_evaluation_50k_2026-09-17.yaml": "c835db6b7f455c7df4a246827ab77653f94a0dc4af92c25ec20634fd826ea750",
+  "rules/schema.json": "4d6e495b641eee85f59ffa80a72e36c48e1608788b1c3f006b9ae72990f7db8b",
+  "tests/fixtures/README.md": "c1e20796484d7f49216d82a49f64e92d625df80bebd0fcd052f463b5cbd07543",
+  "tests/fixtures/growth_50k_reference.json": "bcb49ccf0e8d70bd6d7490a05cb7d4d44a62bcfae9c5663957b21ce93d7230b2",
+  "tests/fixtures/round_trip.json": "661cfa9cca8d7a943fe18b20b45e911658b8003f237415909beb103873ba4251",
+  "tests/fixtures/trace.schema.json": "c234483328dd0af76d20e415674927515fdd7c042b3a14e17e3b301f79349f3a",
+  "tests/fixtures/reference.schema.json": "91fb56294b45947317dcedf2fc5a77a180108bb108815bc0620f0023a07595fb"
+}

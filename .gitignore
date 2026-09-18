@@ -10,3 +10,10 @@ local_data/
 REVIEW_PACKET.md
 REVIEW_DIFF.txt
 RP_BODY.md
+PR_BODY.md
+.worktrees/
+dist/
+build/
+*.egg-info/
+.ruff_cache/
+.mypy_cache/

@@ -1,0 +1,649 @@
+{
+  "schema_version": 1,
+  "fixture_id": "growth-50k-reference-v1",
+  "source_url": "https://ftmo.com/en/futures/trading-objectives-and-rules/",
+  "source_observed_on": "2026-09-17",
+  "cases": [
+    {
+      "id": "official-eod-floor",
+      "kind": "floor_sequence",
+      "origin": "official_numeric_example",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "initial": "50000.00",
+        "prior_closes": [
+          "51000.00",
+          "50500.00",
+          "52500.00"
+        ]
+      },
+      "expected": {
+        "session_start_floors": [
+          "48000.00",
+          "49000.00",
+          "49000.00",
+          "50000.00"
+        ]
+      }
+    },
+    {
+      "id": "floor-below",
+      "kind": "equity_boundary",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "floor": "48000.00",
+        "equity": "47999.99"
+      },
+      "expected": {
+        "breached": true
+      }
+    },
+    {
+      "id": "floor-contact",
+      "kind": "equity_boundary",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "floor": "48000.00",
+        "equity": "48000.00"
+      },
+      "expected": {
+        "breached": true
+      }
+    },
+    {
+      "id": "floor-above",
+      "kind": "equity_boundary",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "floor": "48000.00",
+        "equity": "48000.01"
+      },
+      "expected": {
+        "breached": false
+      }
+    },
+    {
+      "id": "commission-contact",
+      "kind": "fee_equity",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "cash_before_fee": "48000.01",
+        "fee": "0.01",
+        "unrealized": "0.00",
+        "floor": "48000.00"
+      },
+      "expected": {
+        "equity": "48000.00",
+        "breached": true
+      }
+    },
+    {
+      "id": "unrealized-contact",
+      "kind": "fee_equity",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "cash_before_fee": "50000.00",
+        "fee": "0.00",
+        "unrealized": "-2000.00",
+        "floor": "48000.00"
+      },
+      "expected": {
+        "equity": "48000.00",
+        "breached": true
+      }
+    },
+    {
+      "id": "no-double-fee",
+      "kind": "fee_equity",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "cash_before_fee": "50000.00",
+        "fee": "2.50",
+        "unrealized": "50.00",
+        "floor": "48000.00"
+      },
+      "expected": {
+        "equity": "50047.50",
+        "breached": false
+      }
+    },
+    {
+      "id": "intraday-high-does-not-trail",
+      "kind": "floor_timing",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "active_floor": "48000.00",
+        "intraday_balance": "54000.00",
+        "closing_balance": "51000.00"
+      },
+      "expected": {
+        "floor_during_session": "48000.00",
+        "floor_at_close": "48000.00",
+        "floor_next_start": "49000.00"
+      }
+    },
+    {
+      "id": "floor-stays-locked",
+      "kind": "floor_sequence",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "initial": "50000.00",
+        "prior_closes": [
+          "52500.00",
+          "51000.00",
+          "54000.00"
+        ]
+      },
+      "expected": {
+        "session_start_floors": [
+          "48000.00",
+          "50000.00",
+          "50000.00",
+          "50000.00"
+        ]
+      }
+    },
+    {
+      "id": "breach-is-sticky",
+      "kind": "breach_history",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "floor": "48000.00",
+        "equities": [
+          "48000.00",
+          "54000.00"
+        ]
+      },
+      "expected": {
+        "breached": true
+      }
+    },
+    {
+      "id": "target-flat-at-close",
+      "kind": "target",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "balance": "53000.00",
+        "open_positions": 0,
+        "after_session_close": true
+      },
+      "expected": {
+        "target_condition_met": true
+      }
+    },
+    {
+      "id": "target-open-at-close",
+      "kind": "target",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "balance": "53000.00",
+        "open_positions": 1,
+        "after_session_close": true
+      },
+      "expected": {
+        "target_condition_met": false
+      }
+    },
+    {
+      "id": "target-intraday",
+      "kind": "target",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "balance": "53000.00",
+        "open_positions": 0,
+        "after_session_close": false
+      },
+      "expected": {
+        "target_condition_met": false
+      }
+    },
+    {
+      "id": "target-one-cent-short",
+      "kind": "target",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "balance": "52999.99",
+        "open_positions": 0,
+        "after_session_close": true
+      },
+      "expected": {
+        "target_condition_met": false
+      }
+    },
+    {
+      "id": "official-consistency",
+      "kind": "consistency",
+      "origin": "official_numeric_example",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "closed_days": [
+          "2000.00",
+          "1000.00"
+        ]
+      },
+      "expected": {
+        "best_day": "2000.00",
+        "total": "3000.00",
+        "satisfied": false,
+        "breached": false
+      }
+    },
+    {
+      "id": "consistency-exact-40",
+      "kind": "consistency",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "closed_days": [
+          "2000.00",
+          "1000.00",
+          "1000.00",
+          "1000.00"
+        ]
+      },
+      "expected": {
+        "best_day": "2000.00",
+        "total": "5000.00",
+        "satisfied": true,
+        "breached": false
+      }
+    },
+    {
+      "id": "consistency-loss-in-denominator",
+      "kind": "consistency",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "closed_days": [
+          "1200.00",
+          "900.00",
+          "900.00",
+          "-100.00"
+        ]
+      },
+      "expected": {
+        "best_day": "1200.00",
+        "total": "2900.00",
+        "satisfied": false,
+        "breached": false
+      }
+    },
+    {
+      "id": "consistency-zero",
+      "kind": "consistency",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "closed_days": [
+          "100.00",
+          "-100.00"
+        ]
+      },
+      "expected": {
+        "best_day": "100.00",
+        "total": "0.00",
+        "satisfied": false,
+        "breached": false,
+        "share": null,
+        "reason": "nonpositive_total_profit"
+      }
+    },
+    {
+      "id": "consistency-negative",
+      "kind": "consistency",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "closed_days": [
+          "100.00",
+          "-200.00"
+        ]
+      },
+      "expected": {
+        "best_day": "100.00",
+        "total": "-100.00",
+        "satisfied": false,
+        "breached": false,
+        "share": null,
+        "reason": "nonpositive_total_profit"
+      }
+    },
+    {
+      "id": "fees-change-consistency",
+      "kind": "consistency_fees",
+      "origin": "synthetic_boundary",
+      "decision": "human_decision_pending",
+      "inputs": {
+        "gross_days": [
+          "1200.00",
+          "900.00",
+          "900.00"
+        ],
+        "fees_by_day": [
+          "0.00",
+          "0.00",
+          "30.00"
+        ]
+      },
+      "expected": {
+        "proposed_net_days": [
+          "1200.00",
+          "900.00",
+          "870.00"
+        ],
+        "proposed_satisfied": false,
+        "gross_satisfied": true
+      }
+    },
+    {
+      "id": "no-evaluation-daily-loss",
+      "kind": "daily_loss",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "session_loss": "1000.00",
+        "equity": "49000.00",
+        "floor": "48000.00"
+      },
+      "expected": {
+        "daily_loss_limit": null,
+        "drawdown_breached": false
+      }
+    },
+    {
+      "id": "ten-micros",
+      "kind": "exposure",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "mini_contracts": 0,
+        "micro_contracts": 10
+      },
+      "expected": {
+        "mini_equivalent": "1.0",
+        "within_cap": true
+      }
+    },
+    {
+      "id": "official-four-plus-ten",
+      "kind": "exposure",
+      "origin": "official_numeric_example",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "mini_contracts": 4,
+        "micro_contracts": 10
+      },
+      "expected": {
+        "mini_equivalent": "5.0",
+        "within_cap": true
+      }
+    },
+    {
+      "id": "official-two-plus-thirty",
+      "kind": "exposure",
+      "origin": "official_numeric_example",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "mini_contracts": 2,
+        "micro_contracts": 30
+      },
+      "expected": {
+        "mini_equivalent": "5.0",
+        "within_cap": true
+      }
+    },
+    {
+      "id": "fifty-micros",
+      "kind": "exposure",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "mini_contracts": 0,
+        "micro_contracts": 50
+      },
+      "expected": {
+        "mini_equivalent": "5.0",
+        "within_cap": true
+      }
+    },
+    {
+      "id": "fifty-one-micros",
+      "kind": "exposure",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "mini_contracts": 0,
+        "micro_contracts": 51
+      },
+      "expected": {
+        "mini_equivalent": "5.1",
+        "within_cap": false
+      }
+    },
+    {
+      "id": "mini-over-cap",
+      "kind": "exposure",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "mini_contracts": 6,
+        "micro_contracts": 0
+      },
+      "expected": {
+        "mini_equivalent": "6.0",
+        "within_cap": false
+      }
+    },
+    {
+      "id": "cross-contract-no-offset",
+      "kind": "signed_exposure",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "mini_positions_by_contract": {
+          "LAB-A": 4,
+          "LAB-B": -2
+        }
+      },
+      "expected": {
+        "mini_equivalent": "6.0",
+        "within_cap": false
+      }
+    },
+    {
+      "id": "dst-spring-before",
+      "kind": "session_window",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "session_id": "2026-03-06",
+        "timezone": "America/New_York"
+      },
+      "expected": {
+        "start_utc": "2026-03-05T23:00:00Z",
+        "close_utc": "2026-03-06T21:10:00Z"
+      }
+    },
+    {
+      "id": "dst-spring-after",
+      "kind": "session_window",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "session_id": "2026-03-09",
+        "timezone": "America/New_York"
+      },
+      "expected": {
+        "start_utc": "2026-03-08T22:00:00Z",
+        "close_utc": "2026-03-09T20:10:00Z"
+      }
+    },
+    {
+      "id": "dst-fall-before",
+      "kind": "session_window",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "session_id": "2026-10-30",
+        "timezone": "America/New_York"
+      },
+      "expected": {
+        "start_utc": "2026-10-29T22:00:00Z",
+        "close_utc": "2026-10-30T20:10:00Z"
+      }
+    },
+    {
+      "id": "dst-fall-after",
+      "kind": "session_window",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "session_id": "2026-11-02",
+        "timezone": "America/New_York"
+      },
+      "expected": {
+        "start_utc": "2026-11-01T23:00:00Z",
+        "close_utc": "2026-11-02T21:10:00Z"
+      }
+    },
+    {
+      "id": "session-before-open",
+      "kind": "session_boundary",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "timestamp_utc": "2026-09-17T21:59:59Z",
+        "event_type": "Fill"
+      },
+      "expected": {
+        "session_or_disposition": "quarantine"
+      }
+    },
+    {
+      "id": "session-at-open",
+      "kind": "session_boundary",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "timestamp_utc": "2026-09-17T22:00:00Z",
+        "event_type": "Fill"
+      },
+      "expected": {
+        "session_or_disposition": "2026-09-18"
+      }
+    },
+    {
+      "id": "session-last-second",
+      "kind": "session_boundary",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "timestamp_utc": "2026-09-17T20:09:59Z",
+        "event_type": "Fill"
+      },
+      "expected": {
+        "session_or_disposition": "2026-09-17"
+      }
+    },
+    {
+      "id": "session-close-fill",
+      "kind": "session_boundary",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "timestamp_utc": "2026-09-17T20:10:00Z",
+        "event_type": "Fill"
+      },
+      "expected": {
+        "session_or_disposition": "quarantine"
+      }
+    },
+    {
+      "id": "session-close-clock",
+      "kind": "session_boundary",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "timestamp_utc": "2026-09-17T20:10:00Z",
+        "event_type": "SessionClose"
+      },
+      "expected": {
+        "session_or_disposition": "2026-09-17"
+      }
+    },
+    {
+      "id": "session-gap",
+      "kind": "session_boundary",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "timestamp_utc": "2026-09-17T20:10:01Z",
+        "event_type": "Fill"
+      },
+      "expected": {
+        "session_or_disposition": "quarantine"
+      }
+    },
+    {
+      "id": "missing-spec",
+      "kind": "data_quality",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "condition": "missing_instrument_spec"
+      },
+      "expected": {
+        "state": "data_unavailable"
+      }
+    },
+    {
+      "id": "missing-mark",
+      "kind": "data_quality",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "condition": "missing_position_mark"
+      },
+      "expected": {
+        "state": "data_unavailable"
+      }
+    },
+    {
+      "id": "missing-calendar",
+      "kind": "data_quality",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "condition": "missing_calendar"
+      },
+      "expected": {
+        "state": "data_unavailable"
+      }
+    },
+    {
+      "id": "conflicting-duplicate",
+      "kind": "data_quality",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "condition": "idempotency_conflict"
+      },
+      "expected": {
+        "state": "data_unavailable"
+      }
+    }
+  ]
+}

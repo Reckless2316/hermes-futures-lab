@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "fixture_id",
+    "source_url",
+    "source_observed_on",
+    "cases"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "fixture_id": {
+      "const": "growth-50k-reference-v1"
+    },
+    "source_url": {
+      "const": "https://ftmo.com/en/futures/trading-objectives-and-rules/"
+    },
+    "source_observed_on": {
+      "const": "2026-09-17"
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "origin",
+          "decision",
+          "inputs",
+          "expected"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "breach_history",
+              "consistency",
+              "consistency_fees",
+              "daily_loss",
+              "data_quality",
+              "equity_boundary",
+              "exposure",
+              "fee_equity",
+              "floor_sequence",
+              "floor_timing",
+              "session_boundary",
+              "session_window",
+              "signed_exposure",
+              "target"
+            ]
+          },
+          "origin": {
+            "enum": [
+              "official_numeric_example",
+              "synthetic_boundary"
+            ]
+          },
+          "decision": {
+            "enum": [
+              "proposed_for_review",
+              "human_decision_pending"
+            ]
+          },
+          "inputs": {
+            "type": "object",
+            "minProperties": 1
+          },
+          "expected": {
+            "type": "object",
+            "minProperties": 1
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
