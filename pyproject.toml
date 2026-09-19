@@ -9,7 +9,7 @@ description = "Deterministic, local futures practice lab: P0 specification skele
 requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE"]
-dependencies = []
+dependencies = ["PyYAML==6.0.3"]
 
 [project.scripts]
 futures-lab = "futures_lab.cli:main"
@@ -33,3 +33,6 @@ build-constraint-dependencies = [
   "pluggy==1.6.0",
   "trove-classifiers==2026.6.1.19",
 ]
+
+[tool.hatch.build.targets.wheel.force-include]
+"rules" = "futures_lab/resources/rules"
