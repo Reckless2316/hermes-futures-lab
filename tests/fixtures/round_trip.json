@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "fixture_id": "synthetic-round-trip-v2",
+  "fixture_id": "synthetic-round-trip-v3",
   "provenance": {
     "id": "synthetic-p0-recipe",
     "vendor": "project-authored",
-    "dataset_id": "synthetic-round-trip-v2",
+    "dataset_id": "synthetic-round-trip-v3",
     "input_path": "tests/fixtures/README.md",
-    "input_sha256": "4d3c95ec0d89a4d49ccf242323a1a848c586638ffb0746aba6c0d290054662e5",
+    "input_sha256": "c77ee2f1776759689a0b3c73b4c15584fcb4ef2225ac4815d43af837642717e0",
     "license": "Synthetic test use and redistribution permitted",
     "synthetic": true,
     "original_timezone": "UTC",
@@ -56,7 +56,8 @@
         "mini_equivalent": "1.0",
         "expiry": "2026-09-30",
         "calendar_id": "synthetic-weekday-v1",
-        "roll_policy": "none"
+        "roll_policy": "none",
+        "ftmo_counting_class": "mini"
       }
     },
     {
@@ -72,8 +73,8 @@
       "provenance_id": "synthetic-p0-recipe",
       "payload": {
         "ruleset_id": "ftmo-futures-growth-evaluation-50k",
-        "rules_version": "2026-09-18-candidate.2",
-        "ruleset_sha256": "2da332b5627dee4585555e7af9cc375d8b1ab65107dba54b4c17d538b71179eb"
+        "rules_version": "2026-09-18-candidate.3",
+        "ruleset_sha256": "a1dcf3f3ac04abb7c5334bd6e65e9374fc36d67c3422a4b590c3ed3ae8eeeda6"
       }
     },
     {

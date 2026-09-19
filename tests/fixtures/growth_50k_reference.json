@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "fixture_id": "growth-50k-reference-v2",
+  "fixture_id": "growth-50k-reference-v3",
   "source_url": "https://ftmo.com/en/futures/trading-objectives-and-rules/",
   "source_observed_on": "2026-09-17",
   "cases": [
@@ -345,7 +345,20 @@
           "900.00",
           "870.00"
         ],
-        "satisfied": false
+        "net_satisfied": false,
+        "gross_consistency_share": {
+          "best_day": "1200.00",
+          "total": "3000.00",
+          "share": "2/5",
+          "reason": null
+        },
+        "net_of_fees_consistency_share": {
+          "best_day": "1200.00",
+          "total": "2970.00",
+          "share": "40/99",
+          "reason": null
+        },
+        "net_of_fees_label": "lab_convention_pending_verification"
       }
     },
     {
@@ -370,11 +383,13 @@
       "decision": "proposed_for_review",
       "inputs": {
         "mini_contracts": 0,
-        "micro_contracts": 10
+        "micro_contracts": 10,
+        "standard_contracts": 0
       },
       "expected": {
         "mini_equivalent": "1.0",
-        "within_cap": true
+        "within_cap": true,
+        "official_semantics_status": "unresolved_pending_ftmo_confirmation"
       }
     },
     {
@@ -383,12 +398,14 @@
       "origin": "official_numeric_example",
       "decision": "proposed_for_review",
       "inputs": {
-        "mini_contracts": 4,
-        "micro_contracts": 10
+        "mini_contracts": 0,
+        "micro_contracts": 10,
+        "standard_contracts": 4
       },
       "expected": {
         "mini_equivalent": "5.0",
-        "within_cap": true
+        "within_cap": true,
+        "official_semantics_status": "unresolved_pending_ftmo_confirmation"
       }
     },
     {
@@ -398,11 +415,13 @@
       "decision": "proposed_for_review",
       "inputs": {
         "mini_contracts": 2,
-        "micro_contracts": 30
+        "micro_contracts": 30,
+        "standard_contracts": 0
       },
       "expected": {
         "mini_equivalent": "5.0",
-        "within_cap": true
+        "within_cap": true,
+        "official_semantics_status": "unresolved_pending_ftmo_confirmation"
       }
     },
     {
@@ -412,25 +431,29 @@
       "decision": "proposed_for_review",
       "inputs": {
         "mini_contracts": 0,
-        "micro_contracts": 50
+        "micro_contracts": 50,
+        "standard_contracts": 0
       },
       "expected": {
         "mini_equivalent": "5.0",
-        "within_cap": true
+        "within_cap": true,
+        "official_semantics_status": "unresolved_pending_ftmo_confirmation"
       }
     },
     {
       "id": "fifty-one-micros",
       "kind": "exposure",
       "origin": "synthetic_boundary",
-      "decision": "proposed_for_review",
+      "decision": "lab_convention_pending_ftmo_confirmation",
       "inputs": {
         "mini_contracts": 0,
-        "micro_contracts": 51
+        "micro_contracts": 51,
+        "standard_contracts": 0
       },
       "expected": {
         "mini_equivalent": "5.1",
-        "within_cap": false
+        "within_cap": false,
+        "official_semantics_status": "unresolved_pending_ftmo_confirmation"
       }
     },
     {
@@ -440,11 +463,13 @@
       "decision": "proposed_for_review",
       "inputs": {
         "mini_contracts": 6,
-        "micro_contracts": 0
+        "micro_contracts": 0,
+        "standard_contracts": 0
       },
       "expected": {
         "mini_equivalent": "6.0",
-        "within_cap": false
+        "within_cap": false,
+        "official_semantics_status": "unresolved_pending_ftmo_confirmation"
       }
     },
     {
@@ -675,7 +700,195 @@
           "900.00",
           "870.00"
         ],
-        "satisfied": false
+        "net_satisfied": false,
+        "gross_consistency_share": {
+          "best_day": "1200.00",
+          "total": "3000.00",
+          "share": "2/5",
+          "reason": null
+        },
+        "net_of_fees_consistency_share": {
+          "best_day": "1200.00",
+          "total": "2970.00",
+          "share": "40/99",
+          "reason": null
+        },
+        "net_of_fees_label": "lab_convention_pending_verification"
+      }
+    },
+    {
+      "id": "no-prior-close",
+      "kind": "floor_sequence",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "initial": "50000.00",
+        "prior_closes": []
+      },
+      "expected": {
+        "session_start_floors": [
+          "48000.00"
+        ]
+      }
+    },
+    {
+      "id": "losing-first-close",
+      "kind": "floor_sequence",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "initial": "50000.00",
+        "prior_closes": [
+          "49000.00"
+        ]
+      },
+      "expected": {
+        "session_start_floors": [
+          "48000.00",
+          "48000.00"
+        ]
+      }
+    },
+    {
+      "id": "all-closes-below-initial",
+      "kind": "floor_sequence",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "initial": "50000.00",
+        "prior_closes": [
+          "49000.00",
+          "49500.00"
+        ]
+      },
+      "expected": {
+        "session_start_floors": [
+          "48000.00",
+          "48000.00",
+          "48000.00"
+        ]
+      }
+    },
+    {
+      "id": "one-micro",
+      "kind": "exposure",
+      "origin": "synthetic_boundary",
+      "decision": "lab_convention_pending_ftmo_confirmation",
+      "inputs": {
+        "standard_contracts": 0,
+        "mini_contracts": 0,
+        "micro_contracts": 1
+      },
+      "expected": {
+        "mini_equivalent": "0.1",
+        "within_cap": true,
+        "official_semantics_status": "unresolved_pending_ftmo_confirmation"
+      }
+    },
+    {
+      "id": "mixed-counting-classes",
+      "kind": "exposure",
+      "origin": "synthetic_boundary",
+      "decision": "lab_convention_pending_ftmo_confirmation",
+      "inputs": {
+        "standard_contracts": 2,
+        "mini_contracts": 2,
+        "micro_contracts": 9
+      },
+      "expected": {
+        "mini_equivalent": "4.9",
+        "within_cap": true,
+        "official_semantics_status": "unresolved_pending_ftmo_confirmation"
+      }
+    },
+    {
+      "id": "standard-over-cap",
+      "kind": "exposure",
+      "origin": "synthetic_boundary",
+      "decision": "proposed_for_review",
+      "inputs": {
+        "standard_contracts": 6,
+        "mini_contracts": 0,
+        "micro_contracts": 0
+      },
+      "expected": {
+        "mini_equivalent": "6.0",
+        "within_cap": false,
+        "official_semantics_status": "unresolved_pending_ftmo_confirmation"
+      }
+    },
+    {
+      "id": "fees-change-best-day",
+      "kind": "consistency_fees",
+      "origin": "synthetic_boundary",
+      "decision": "human_accepted_lab_convention",
+      "inputs": {
+        "gross_days": [
+          "1200.00",
+          "1100.00",
+          "1000.00"
+        ],
+        "fees_by_day": [
+          "200.00",
+          "0.00",
+          "0.00"
+        ]
+      },
+      "expected": {
+        "gross_satisfied": true,
+        "net_satisfied": true,
+        "net_days": [
+          "1000.00",
+          "1100.00",
+          "1000.00"
+        ],
+        "gross_consistency_share": {
+          "best_day": "1200.00",
+          "total": "3300.00",
+          "share": "4/11",
+          "reason": null
+        },
+        "net_of_fees_consistency_share": {
+          "best_day": "1100.00",
+          "total": "3100.00",
+          "share": "11/31",
+          "reason": null
+        },
+        "net_of_fees_label": "lab_convention_pending_verification"
+      }
+    },
+    {
+      "id": "fees-make-net-total-zero",
+      "kind": "consistency_fees",
+      "origin": "synthetic_boundary",
+      "decision": "human_accepted_lab_convention",
+      "inputs": {
+        "gross_days": [
+          "10.00"
+        ],
+        "fees_by_day": [
+          "10.00"
+        ]
+      },
+      "expected": {
+        "gross_satisfied": false,
+        "net_satisfied": false,
+        "net_days": [
+          "0.00"
+        ],
+        "gross_consistency_share": {
+          "best_day": "10.00",
+          "total": "10.00",
+          "share": "1/1",
+          "reason": null
+        },
+        "net_of_fees_consistency_share": {
+          "best_day": "0.00",
+          "total": "0.00",
+          "share": null,
+          "reason": "nonpositive_total_profit"
+        },
+        "net_of_fees_label": "lab_convention_pending_verification"
       }
     }
   ]

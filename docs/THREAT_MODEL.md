@@ -1,7 +1,7 @@
 # Threat model v1
 
 Scope: P0 local specification CLI, with explicit controls required before later
-phases. Assets are deterministic results, event/rule provenance, private source,
+phases. Assets are deterministic results, event/rule provenance, public source integrity,
 licensed input data and the isolation of the user's execution environment.
 
 The current trust boundary is user-selected local artifact → read-only CLI →
@@ -28,8 +28,9 @@ authenticity. Reviewers must inspect the corresponding bytes and sources.
 Residual risks: local machine compromise and malicious package installation are
 outside the CLI's isolation guarantees. Sparse practice data cannot prove
 continuous equity compliance. Host network isolation, Windows runtime, backup
-and restore, and data-license review have not been tested in P0. A private
-repository and `.gitignore` do not remove already committed sensitive material.
+and restore, and data-license review have not been tested in P0. The repository
+is public: every committed artifact must be suitable for public disclosure.
+`.gitignore` does not remove already committed sensitive material.
 
 Operational response: quarantine disputed input, retain original hashes and
 evidence, invalidate dependent projections, and review a new version. Never

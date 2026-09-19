@@ -38,7 +38,10 @@ You are the **primary implementation engineer** for the standalone Futures Train
 
 ## Build order and tests
 
-Follow P0 through P7 in the master blueprint. The **first ticket** should establish package layout, `DATA_CONTRACT.md`, `RULES_REGISTER.md`, the 50K Evaluation manifest/schema, immutable ledger, rules evaluator, and a CLI demonstration on synthetic events. Do not jump to UI or AI coaching.
+Follow P0 through P7 in the master blueprint. The current **P0 ticket** establishes package layout, `DATA_CONTRACT.md`,
+`RULES_REGISTER.md`, candidate manifests/schema and synthetic contracts. The
+immutable ledger, rules evaluator and financial demonstration are P1 work,
+prohibited until P0 re-review and human acceptance. Current remediation is P0 only. Do not jump to UI or AI coaching.
 
 At minimum, the first implementation must prove: exact drawdown floor contact fails; the floor updates only from a preceding session closing balance and locks at initial balance; commissions and unrealized P&L affect equity; a target is not deemed passed with open positions; the 40% best-day ratio delays eligibility; the Evaluation has no FTMO daily-loss rule; max exposure counts ten micros as one mini; a DST transition does not split the wrong trading day. Use FTMO’s [current Futures rule page](https://ftmo.com/en/futures/trading-objectives-and-rules/) as the golden source and record the retrieval date.
 

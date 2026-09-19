@@ -232,7 +232,8 @@
                     "mini_equivalent",
                     "expiry",
                     "calendar_id",
-                    "roll_policy"
+                    "roll_policy",
+                    "ftmo_counting_class"
                   ],
                   "properties": {
                     "instrument_id": {
@@ -290,6 +291,13 @@
                     "roll_policy": {
                       "type": "string",
                       "minLength": 1
+                    },
+                    "ftmo_counting_class": {
+                      "enum": [
+                        "standard",
+                        "mini",
+                        "micro"
+                      ]
                     }
                   }
                 }

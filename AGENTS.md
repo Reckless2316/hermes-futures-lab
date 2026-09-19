@@ -21,3 +21,10 @@ implementation checks do not replace Claude review or human acceptance.
   Git. Synthetic fixtures must be identified as synthetic.
 - Run the ticket gate and inspect the diff. Prepare a frozen review packet with
   hashes, evidence, limitations and the actual Claude review disposition.
+
+- The repository is public and MIT-licensed. Historical authorization text is a
+  record of its specific action, never permission for future unrelated actions.
+- Current PR #2 remediation is P0 only: preserve candidate.1/candidate.2 bytes,
+  use candidate.3, retain unresolved official fee/fractional-micro semantics,
+  and require separate gross/net consistency reports in P1. Do not begin P1 or
+  merge PR #2 during remediation; obtain Claude re-review and human acceptance.

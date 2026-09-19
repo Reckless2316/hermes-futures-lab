@@ -34,7 +34,7 @@ record venue, interval and contract-roll metadata. Raw data lives outside Git.
 
 | Type | Required payload and meaning |
 | --- | --- |
-| InstrumentSpec | instrument_id, symbol, venue, currency, tick_size, tick_value, multiplier, mini_equivalent, expiry, calendar_id, roll_policy; immutable specification selected by ID |
+| InstrumentSpec | instrument_id, symbol, venue, currency, tick_size, tick_value, multiplier, ftmo_counting_class, mini_equivalent, expiry, calendar_id, roll_policy; immutable specification selected by ID |
 | RulesetSelected | ruleset_id, rules_version, ruleset_sha256; bind a run before financial events; one rules version per run |
 | MarketEvent | instrument_id, kind (`trade`, `quote`, `bar`), kind-specific price fields, volume and interval for bars; never invent a tick path from OHLC |
 | OrderIntent | order_id, instrument_id, side, quantity, order_type (`market`, `limit`, `stop`), limit_price/stop_price as applicable; lab simulation only |
@@ -51,6 +51,12 @@ Instrument definitions precede referencing events. The multiplier times tick
 size must equal tick value. Contract identifiers include expiry and do not
 silently roll. A synthetic specification must never be treated as a real exchange
 specification. Missing specifications or marks block calculations.
+`ftmo_counting_class` is explicitly `standard`, `mini`, or `micro`; the candidate.3
+weights are respectively 1.0, 1.0, and 0.1. `mini_equivalent` must match the
+selected class weight, never an inference from the symbol or multiplier.
+Exposure sums absolute net positions per contract times class weight. Fractional
+micro summation is a lab convention pending FTMO confirmation (ADR 004); reports
+must retain this unresolved status rather than claim official verification.
 
 ## Ledger and revisions
 
@@ -97,10 +103,23 @@ code commit/version, calendar hash/tzdb version, fill-model version and seed
 (null when inapplicable), provenance/license references and coverage limitations.
 
 Amounts: balance, equity, open P&L, fees, target progress, floor and buffer are
-decimal strings. Include exact best-day and total closed-profit amounts, optional
-display share, mini-equivalent exposure and position count. Ratios with zero or
-negative denominators are null with reason codes; display rounding never drives
-eligibility. Each rule includes evidence event/session IDs and a reason code.
+decimal strings. P1 MUST report separate `gross_consistency_share` and
+`net_of_fees_consistency_share` objects. Each contains its own `best_day`, `total`,
+exact `share` (reduced rational string such as `2/5`), and `reason` (null when
+defined). Gross days are realized gross P&L; net days subtract every fee posted
+in that session, including entry fees on open positions. Choose the best positive
+day independently for each basis (zero if none); retain loss days in each total.
+For each basis independently, nonpositive totals give `share: null` and
+`reason: nonpositive_total_profit`. Never borrow the other basis's numerator,
+denominator or result. Optional rounded display values must not drive eligibility.
+`net_of_fees_label: lab_convention_pending_verification` is mandatory alongside
+both outputs. Gross is a separate measure, not an assertion that FTMO requires
+gross accounting. The current lab convention uses net; neither share silently
+substitutes for the other. Pending official semantics must remain visible.
+
+Also include mini-equivalent exposure, explicit counting classes and position
+count, with `fractional_micro_summation: lab_convention_pending_ftmo_confirmation`.
+Each rule includes evidence event/session IDs and a reason code.
 
 Evaluation state is one of `data_unavailable`, `breached`, `not_yet_eligible`,
 `eligible_estimate`. Data insufficiency prevents a clean eligibility result;

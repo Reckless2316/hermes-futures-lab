@@ -28,9 +28,16 @@ Human decision, 2026-09-17, in this implementation session:
 above is therefore accepted for lab accounting. This is not verification of
 account-specific FTMO terms. Independent review remains required.
 
-Implementation record, 2026-09-18: candidate.1 remains byte-identical to the
+Historical candidate.2 implementation record, 2026-09-18: candidate.1 remains byte-identical to the
 checkpoint. New `2026-09-18-candidate.2` records this lab convention and the human
 decision date. Its external source observation remains 2026-09-17 and independent
 review remains pending. The schema, active trace, reference decision metadata and
-artifact inventory now refer to candidate.2. Reviewed promotion must create a
+artifact inventory then referred to candidate.2. Reviewed promotion must create a
 new file/version; neither candidate is an accepted evaluation ruleset.
+
+Remediation decision, 2026-09-18: candidate.3 supersedes candidate.2 without
+changing either historical manifest. P1 must report gross consistency share AND
+net-of-fees consistency share, each with its own best day and total. Label net
+`lab_convention_pending_verification`; neither may silently replace the other.
+The FTMO fee basis and fee-day assignment remain unresolved official semantics.
+See DATA_CONTRACT for exact ratio/null behavior and ADR 004 for this remediation.

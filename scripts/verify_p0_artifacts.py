@@ -26,10 +26,13 @@ def utc_timestamp(value):
 
 ROOT = Path(__file__).resolve().parents[1]
 HISTORICAL_RULES = 'rules/ftmo_futures_growth_evaluation_50k_2026-09-17.yaml'
-ACTIVE_RULES = 'rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.2.yaml'
+CANDIDATE_TWO_RULES = 'rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.2.yaml'
+CANDIDATE_TWO_HASH = '2da332b5627dee4585555e7af9cc375d8b1ab65107dba54b4c17d538b71179eb'
+ACTIVE_RULES = 'rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.3.yaml'
 HISTORICAL_HASH = 'c835db6b7f455c7df4a246827ab77653f94a0dc4af92c25ec20634fd826ea750'
 PAIRS = [
     (HISTORICAL_RULES, 'rules/schema.json'),
+    (CANDIDATE_TWO_RULES, 'rules/schema.json'),
     (ACTIVE_RULES, 'rules/schema.json'),
     ('tests/fixtures/round_trip.json', 'tests/fixtures/trace.schema.json'),
     ('tests/fixtures/growth_50k_reference.json', 'tests/fixtures/reference.schema.json'),
@@ -114,7 +117,8 @@ def validate_trace(trace, manifest, rules_hash):
                                        ('tick_size', 'tick_value', 'multiplier'))
             require(tick > 0 and value > 0 and multiplier > 0, 'Nonpositive tick specification')
             require(tick * multiplier == value, 'Inconsistent tick specification')
-            require(Decimal(payload['mini_equivalent']) > 0, 'Nonpositive equivalence')
+            weight = manifest['contract_counting']['classes'][payload['ftmo_counting_class']]
+            require(payload['mini_equivalent'] == weight, 'Counting class/equivalence mismatch')
             specs[payload['instrument_id']] = payload
         elif kind == 'RulesetSelected':
             require(not selected, 'Multiple rules selections')
@@ -189,6 +193,7 @@ def main():
         require(hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected,
                 f'Artifact hash mismatch: {path}')
     require(inventory[HISTORICAL_RULES] == HISTORICAL_HASH, 'Historical manifest changed')
+    require(inventory[CANDIDATE_TWO_RULES] == CANDIDATE_TWO_HASH, 'Candidate.2 changed')
     trace = read_artifact(ROOT / 'tests/fixtures/round_trip.json')
     manifest = read_artifact(ROOT / ACTIVE_RULES)
     validate_trace(trace, manifest, inventory[ACTIVE_RULES])
@@ -196,7 +201,7 @@ def main():
     require(provenance['input_path'] == 'tests/fixtures/README.md', 'Unexpected recipe path')
     require(provenance['input_sha256'] == inventory[provenance['input_path']], 'Recipe hash mismatch')
     validate_references(read_artifact(ROOT / 'tests/fixtures/growth_50k_reference.json'), manifest)
-    print(f'PASS {len(inventory)} exact-byte hashes, historical manifest, trace and vector references')
+    print(f'PASS {len(inventory)} exact-byte hashes, both historical manifests, trace and vector references')
 
 
 if __name__ == '__main__':

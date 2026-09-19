@@ -4,24 +4,33 @@ A local futures practice and research lab. The standalone Python core will
 reconstruct synthetic or user-supplied practice events without Hermes or an LLM.
 The initial scope is **50K FTMO Futures Growth Evaluation**.
 
-**P0 implementation prepared; acceptance pending.** This version provides a CLI
+**P0 review gate: FAIL pending remediation re-review; acceptance pending.** This version provides a CLI
 skeleton, data contract, candidate rules manifest, threat model, decision records
 and synthetic reference cases. It does not calculate P&L or evaluation status.
-The fee convention was accepted by the human; Claude's review and human scope
-acceptance are required before P1. See [P0 acceptance](docs/P0_ACCEPTANCE.md).
+The fee convention is human-accepted for the lab, pending FTMO verification.
+Claude re-review and human scope acceptance are required before P1. See [P0 acceptance](docs/P0_ACCEPTANCE.md).
 
 ## Run from this checkout
 
-Python 3.11 and `uv` are required for the locked development environment:
+Use Python 3.11.16 (pinned in `.python-version`) and uv 0.12.17 for the
+validated development environment. Run from the repository root:
 
 ```bash
-uv sync --locked --python 3.11
+uv sync --locked
 uv run --locked futures-lab status
-uv run --locked futures-lab fingerprint rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.2.yaml
+uv run --locked futures-lab fingerprint rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.3.yaml
 uv run --locked python scripts/verify_p0_artifacts.py
 uv run --locked python -m unittest discover -s tests -v
+uv run --locked pytest -q
 uv build
 ```
+
+See [clean-environment validation](docs/P0_VALIDATION.md), including cache and
+isolated-environment instructions. Both runners execute the same tests.
+
+This repository is **public** and licensed under [MIT](LICENSE), selected by the
+human on 2026-09-18. External source material and licensed market data retain
+their own terms; the repository license grants no rights to those materials.
 
 The installed CLI uses only the Python standard library. Test dependencies and
 the build backend are pinned; `uv.lock` records transitive dependencies. Initial

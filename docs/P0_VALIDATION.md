@@ -1,49 +1,91 @@
-# P0 implementation validation — 2026-09-18
+# P0 remediation validation — 2026-09-18
 
-Local implementation checks passed. P0 acceptance remains pending Claude review
-and human approval of the 50K Evaluation scope. ADR 003's lab fee convention was
-accepted by the human on 2026-09-17 and is recorded in candidate.2.
+Local remediation checks passed. Claude's accepted **FAIL pending remediation**
+gate awaits independent re-review; human P0 acceptance remains pending. No P1
+financial implementation or CI exists. Both runners exercise the same 20 tests,
+not 40 independent tests. All passed; zero skipped.
 
-Environment: Python 3.11.16, uv 0.12.7. Commands ran from the P0 worktree unless
-otherwise stated. The cache override is an environment-specific writable path.
+## Reproduce from a clean checkout
+
+Use uv **0.12.17**, enforced by `tool.uv.required-version`. `.python-version`
+pins CPython **3.11.16** for development validation. Package metadata permits
+Python >=3.11, but other interpreters/platforms were not validated in this run.
+Run from the checked-out repository root, with no pre-existing `.venv`:
+
+```bash
+uv --version
+uv sync --locked
+uv run --locked python --version
+uv run --locked python -m unittest discover -s tests -v
+uv run --locked pytest -q
+uv run --locked python scripts/verify_p0_artifacts.py
+uv build
+```
+
+Initial sync requires package-index access (and interpreter download if absent).
+Use `export UV_CACHE_DIR=/tmp/futures-lab-uv-cache` if the normal home cache is
+outside writable roots. Do not use system Python/pytest against an unsynchronized
+checkout or silently skip unavailable dependencies. `tests/__init__.py` supports
+unittest discovery; `scripts/__init__.py` and pytest's explicit root `pythonpath`
+make the development helper import stable. The installed CLI stays independent
+of test helpers and has no runtime dependencies.
+
+Development requirements/transitive versions and artifact hashes are locked in
+uv.lock. Hatchling and all its build dependencies on Python 3.11 are pinned in
+`tool.uv.build-constraint-dependencies`; isolated build requirements are resolved
+separately from application dependencies. See the official
+[uv build-constraint setting](https://docs.astral.sh/uv/reference/settings/#build-constraint-dependencies).
+These pins make the tested package selection reproducible; they do not claim
+bit-for-bit identical build output across operating systems or timezone databases.
+
+## Observed clean-environment run
+
+A clean checkout of the staged remediation files was produced using
+`git checkout-index --all --prefix=/tmp/futures-lab-p0-clean-_phmu4kn/`.
+It contained neither a copied virtual environment nor editable-install metadata.
+The cache `/tmp/futures-lab-p0-clean-cache-_phmu4kn` was new. CPython 3.11.16 was
+already available; this run did not test downloading Python. Validation and
+resume prose were finalized after the run; tested code, manifests, fixtures,
+packaging and lockfile bytes match the committed remediation.
+
+Commands below ran in `/tmp/futures-lab-p0-clean-_phmu4kn` unless stated otherwise.
 
 | Command | Result |
 | --- | --- |
-| `uv sync --locked --offline --python 3.11 --cache-dir /tmp/futures-lab-uv-cache` | Passed; locked environment synchronized without network |
-| `uv run --locked --offline --cache-dir /tmp/futures-lab-uv-cache python -m unittest discover -s tests -v` | 15 tests passed, zero skipped |
-| `uv build --offline --cache-dir /tmp/futures-lab-uv-cache` | Source distribution and wheel built |
-| `uv venv /tmp/futures-lab-p0-wheel-20260918 --python 3.11 --cache-dir /tmp/futures-lab-uv-cache` | Created separate test environment |
-| `uv pip install --python /tmp/futures-lab-p0-wheel-20260918/bin/python --offline --no-deps --cache-dir /tmp/futures-lab-uv-cache dist/hermes_futures_lab-0.0.1-py3-none-any.whl` | Wheel installed with no runtime dependencies |
-| `/tmp/futures-lab-p0-wheel-20260918/bin/futures-lab status` from `/tmp` | Stable JSON: specification_only, evaluation_available=false, acceptance pending |
-| Isolated `python -I` import and `importlib.metadata.requires` check from `/tmp` | Loaded site-packages copy; package has no runtime dependencies |
-| `git diff --check` and staged equivalent | Passed before commit |
+| `uv sync --locked --cache-dir /tmp/futures-lab-p0-clean-cache-_phmu4kn` | Passed; created .venv, built editable package, prepared/installed 13 packages from a fresh cache |
+| `uv run --locked --offline --cache-dir /tmp/futures-lab-p0-clean-cache-_phmu4kn python -m unittest discover -s tests -v` | **20 tests, OK**, zero skipped (1.957s) |
+| `uv run --locked --offline --cache-dir /tmp/futures-lab-p0-clean-cache-_phmu4kn pytest -q` | **20 passed**, zero skipped (1.97s) |
+| Artifact checker, executed by both suites | All three manifest schemas, 9 hashes, both historical manifests, trace and reference links passed |
+| `uv build --offline --cache-dir /tmp/futures-lab-p0-clean-cache-_phmu4kn` | Source distribution and wheel built successfully |
+| `uv venv /tmp/futures-lab-p0-wheel-_phmu4kn --python 3.11.16 --cache-dir /tmp/futures-lab-p0-clean-cache-_phmu4kn` | Created separate wheel-smoke environment |
+| `uv pip install --python /tmp/futures-lab-p0-wheel-_phmu4kn/bin/python --offline --no-deps --cache-dir /tmp/futures-lab-p0-clean-cache-_phmu4kn dist/hermes_futures_lab-0.0.1-py3-none-any.whl` | Installed wheel with no dependencies |
+| `/tmp/futures-lab-p0-wheel-_phmu4kn/bin/futures-lab status` from `/tmp` | Stable specification-only JSON, evaluation unavailable, acceptance pending |
+| Isolated `python -I` import/metadata check from `/tmp` | Loaded site-packages, no runtime requirements, MIT metadata and LICENSE included |
+| `git diff --cached --check`; historical-manifest diff against `3ee851b` | Passed; both historical manifest diffs empty |
 
-The tests cover both candidate schema versions, exact historical manifest bytes,
-8 artifact hashes, trace/reference linkage, accepted fee metadata, malformed
-amounts/quantities, duplicate keys, unsafe YAML tags, invalid timestamps, event
-ordering, unknown references, off-tick prices, overfilled intents, DST reference
-windows, stable CLI output, file hashing and CLI error exits. The artifact
-verification script also runs as part of the suite.
+New regressions reject the incomplete drawdown basis, wrong/missing counting
+classes, false verification claims, omitted gross/net reports or labels, and
+class/weight mismatches. Reference cases cover an empty history, losing first
+close, all closes below initial, separate standard/mini/micro counts, fees changing
+the share/best day, and a zero net denominator with a positive gross denominator.
+These are P0 contracts and authored expectations, not financial engine outcomes.
+A first run caught a null-share schema error; it was fixed before the clean run.
 
-A test initially exposed that JSON Schema's date-time format checker was absent
-without its optional dependency. The artifact checker now registers an explicit
-UTC parser; invalid dates and separators fail the schema gate. Decimal patterns
-also reject trailing newlines. These are fixture validation controls, not a
-production importer or financial evaluator.
+Candidate SHA-256 values:
 
-Candidate.2 exact-byte SHA-256:
-`2da332b5627dee4585555e7af9cc375d8b1ab65107dba54b4c17d538b71179eb`.
-Candidate.1 remains
-`c835db6b7f455c7df4a246827ab77653f94a0dc4af92c25ec20634fd826ea750`.
-All other hashes are in `tests/fixtures/artifacts.sha256.json`.
+```text
+candidate.1  c835db6b7f455c7df4a246827ab77653f94a0dc4af92c25ec20634fd826ea750
+candidate.2  2da332b5627dee4585555e7af9cc375d8b1ab65107dba54b4c17d538b71179eb
+candidate.3  a1dcf3f3ac04abb7c5334bd6e65e9374fc36d67c3422a4b590c3ed3ae8eeeda6
+```
 
-No database/migration exists. No financial engine, P1 property/integration tests,
-CI, automated dependency audit, dedicated secret scanner or external Claude
-review has run. Git-tracked paths and the implementation diff were manually
-inspected for secrets, raw data and execution connectivity. CI/security gates
-remain P1 work under GITHUB_WORKFLOW; they are not reported as passing here.
+Candidate.1 and candidate.2 match the pre-remediation bytes at `3ee851b`.
+The nine-file inventory is `tests/fixtures/artifacts.sha256.json`. V3 includes
+51 reference cases and 13 synthetic events. Source observation remains 2026-09-17;
+remediation is not a fresh FTMO source or account-terms verification.
 
-Rules are pinned to the source observation on 2026-09-17. Candidate.2's creation
-on 2026-09-18 incorporates the human convention; it is not a fresh official-source
-verification or account-specific-terms review. All 43 reference cases remain
-proposed P1 expectations, with fee interpretation acceptance recorded separately.
+No database or migration, financial evaluator, property/integration engine tests,
+CI, dependency audit or automated secret scan was introduced or claimed to pass.
+The public diff was inspected for source scope, credentials, raw data and execution
+connectivity. Independent re-review and unresolved official interpretations are
+listed in RULES_REGISTER and ADR 004. Original validation remains in Git at 3ee851b.

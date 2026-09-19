@@ -33,7 +33,9 @@ reconciliation blocks evaluation as `data_unavailable`. No automatic holiday or
 early-close assumptions. UTC inputs avoid ambiguous local-clock parsing.
 
 Exposure is the sum of absolute net positions per contract times its declared
-mini equivalence, across instruments. Opposite positions in different contracts
+candidate.3 FTMO counting-class weight (standard 1.0, mini 1.0, micro 0.1),
+across instruments. Fractional summation remains a lab convention pending FTMO
+confirmation; see ADR 004. Opposite positions in different contracts
 do not offset. Working orders are not holdings, but the practice guard reserves
 their possible additional exposure. Incomplete marks or event coverage cannot
 prove that equity never touched the floor; reports must disclose coverage.

@@ -1,10 +1,11 @@
 {
   "rules/ftmo_futures_growth_evaluation_50k_2026-09-17.yaml": "c835db6b7f455c7df4a246827ab77653f94a0dc4af92c25ec20634fd826ea750",
-  "rules/schema.json": "be4cbaf455f637291b3f6aafa877f4ad6b9f0621ac200b877763ffe95de27734",
-  "tests/fixtures/README.md": "4d3c95ec0d89a4d49ccf242323a1a848c586638ffb0746aba6c0d290054662e5",
-  "tests/fixtures/growth_50k_reference.json": "ddb52d2ad07bb558f6820ed66621c80e831c7db9182a1f5d2c464e18d98efd7d",
-  "tests/fixtures/round_trip.json": "7f0b35415edb4f6cea221fde8c093cf3d3ec959b260b954003dc78c3e7fd0cee",
-  "tests/fixtures/trace.schema.json": "fedb8d76a3f89e64d82f3f1e909decf10d56e6756dc207b9ec36746a4eb93cec",
-  "tests/fixtures/reference.schema.json": "12a1a3b13f83bce63501ccb25c578c2298bc11f1c71e33dbbf4b7943f60a87f2",
-  "rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.2.yaml": "2da332b5627dee4585555e7af9cc375d8b1ab65107dba54b4c17d538b71179eb"
+  "rules/schema.json": "9a8981f183e49921b43d807bfe60acd434f397d7ed12170b6cb967ae1f5446cd",
+  "tests/fixtures/README.md": "c77ee2f1776759689a0b3c73b4c15584fcb4ef2225ac4815d43af837642717e0",
+  "tests/fixtures/growth_50k_reference.json": "21136f1b69d8478628bd98fc211ca5a42146bbd1357e6f4a080896911156fc50",
+  "tests/fixtures/round_trip.json": "bd2715b93a86b6960375686aa049e37fee269bec5a38763d12c7472c3450853f",
+  "tests/fixtures/trace.schema.json": "80843cfd411d24d31dfd958c6a31d27ba17d0a39d306cba2897de649232c9788",
+  "tests/fixtures/reference.schema.json": "8c2c7272a3176ddf04ad1b9d1fec8b8ccbe60ae5aa6f94dba8238e9456360779",
+  "rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.2.yaml": "2da332b5627dee4585555e7af9cc375d8b1ab65107dba54b4c17d538b71179eb",
+  "rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.3.yaml": "a1dcf3f3ac04abb7c5334bd6e65e9374fc36d67c3422a4b590c3ed3ae8eeeda6"
 }

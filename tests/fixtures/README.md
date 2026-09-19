@@ -2,8 +2,8 @@
 
 All event prices, instruments, fills, fees, account IDs and journals here are
 invented for this project. They contain no exchange feed or account records.
-Synthetic fixtures may be used and redistributed for testing without market-data
-license restrictions; they do not license the rest of this repository.
+Project-authored synthetic fixtures use the repository MIT LICENSE. External
+source material and market data retain their own terms.
 
 `growth_50k_reference.json` contains hand-selected P1 acceptance vectors.
 `official_numeric_example` marks numeric examples transcribed from the rules
@@ -12,14 +12,22 @@ expected results, not output from an implemented evaluator. ADR 003 fee vectors
 carry `human_accepted_lab_convention`; all others remain proposed for review.
 P0 validates contracts and provenance, not financial engine outcomes.
 
-The active v2 fixtures select candidate.2, incorporating the 2026-09-17 human
-decision. Original v1 fixture bytes are preserved by the checkpoint Git tag.
-The historical candidate.1 manifest remains unchanged in the current tree.
+The active v3 fixtures select candidate.3 and record ADR 004 remediation.
+Original v1 fixtures remain in the checkpoint tag; v2 remains in Git at 3ee851b.
+Candidate.1 and candidate.2 remain byte-identical in the current tree.
+Floor vectors include no prior close and losing prior closes. Exposure vectors
+separate standard, mini and micro counts; fractional micro summation is a lab
+convention pending FTMO confirmation. Fee vectors carry both exact gross and
+net shares as reduced rational strings (or null with a reason), with independent
+best days/totals and an explicit net lab-convention label. The generic
+`consistency` vectors isolate a supplied closed-profit series; they do not decide
+whether official consistency uses gross or net.
 
 `round_trip.json` is a normalized event trace with this authoring recipe:
 
 - Synthetic mini LAB-MINI-202609 at fictional venue LAB: tick size 0.25, tick
-  value 12.50, multiplier 50.00, mini equivalence 1.0; no real instrument claim.
+  value 12.50, multiplier 50.00, FTMO counting class mini, weight 1.0; no real
+  instrument claim.
 - One contract bought at 100.00, fee 2.50, marked at 101.00, sold at 102.00,
   exit fee 2.50; all on session 2026-09-17, closing 20:10 UTC (16:10 EDT).
 - Starting cash 50000.00. After entry fee: cash/equity 49997.50. At the mark:

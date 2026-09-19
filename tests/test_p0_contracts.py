@@ -28,10 +28,17 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256((artifacts.ROOT / artifacts.HISTORICAL_RULES).read_bytes()).hexdigest(),
                          artifacts.HISTORICAL_HASH)
 
-    def test_candidate_two_records_accepted_lab_convention_but_pending_review(self):
+    def test_candidate_two_is_byte_identical_to_reviewed_head(self):
+        self.assertEqual(hashlib.sha256((artifacts.ROOT / artifacts.CANDIDATE_TWO_RULES).read_bytes()).hexdigest(),
+                         artifacts.CANDIDATE_TWO_HASH)
+
+    def test_candidate_three_records_lab_convention_and_unresolved_official_semantics(self):
         self.assertEqual(self.manifest['review_status'], 'pending')
         self.assertEqual(self.manifest['consistency']['decision_status'], 'human_accepted_lab_convention')
-        self.assertIsNone(self.manifest['consistency']['pending_decision'])
+        self.assertEqual(self.manifest['consistency']['pending_decision'], 'FTMO_consistency_fee_basis')
+        self.assertEqual(self.manifest['consistency']['required_reports'],
+                         ['gross_consistency_share', 'net_of_fees_consistency_share'])
+        self.assertFalse(self.manifest['consistency']['allow_silent_substitution'])
         self.assertEqual(self.manifest['consistency']['consistency_profit_basis'],
                          'realized_gross_pnl_minus_all_fees_posted_in_session')
         self.assertEqual(self.manifest['verified_on'], '2026-09-17')
@@ -88,6 +95,7 @@ class ContractTests(unittest.TestCase):
             (7, 'price', '102.00', True),
             (0, 'tick_value', '10.00', True),
             (0, 'mini_equivalent', '0.0', True),
+            (0, 'ftmo_counting_class', 'micro', True),
             (12, 'calendar_id', 'missing', True),
             (1, 'ruleset_sha256', '0' * 64, True),
         ]
@@ -123,7 +131,73 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(case['decision'], 'human_accepted_lab_convention')
         self.assertEqual(case['inputs']['open_positions_by_day'], [0, 0, 1])
         self.assertEqual(case['expected']['net_days'], ['1200.00', '900.00', '870.00'])
-        self.assertFalse(case['expected']['satisfied'])
+        self.assertFalse(case['expected']['net_satisfied'])
+
+    def test_candidate_three_rejects_incomplete_basis_and_verified_convention_claims(self):
+        patches = [
+            ('drawdown', 'basis', 'highest_prior_session_closing_balance'),
+            ('contract_counting', 'classes', {'standard': '1.0', 'mini': '1.0', 'micro': '1.0'}),
+            ('contract_counting', 'classes', {'mini': '1.0', 'micro': '0.1'}),
+            ('contract_counting', 'fractional_micro_summation', 'ftmo_verified'),
+            ('consistency', 'official_semantics_status', 'ftmo_verified'),
+            ('consistency', 'pending_decision', None),
+            ('consistency', 'required_reports', ['net_of_fees_consistency_share']),
+            ('consistency', 'allow_silent_substitution', True),
+        ]
+        for section, key, value in patches:
+            with self.subTest(section=section, key=key):
+                manifest = copy.deepcopy(self.manifest)
+                manifest[section][key] = value
+                with self.assertRaises(ValidationError):
+                    artifacts.validate_schema(manifest, 'rules/schema.json')
+
+    def test_instrument_requires_known_counting_class_matching_weight(self):
+        for value in (None, 'unknown', 'standard'):
+            with self.subTest(value=value):
+                trace = copy.deepcopy(self.trace)
+                payload = trace['events'][0]['payload']
+                if value is None:
+                    del payload['ftmo_counting_class']
+                else:
+                    payload['ftmo_counting_class'] = value
+                    payload['mini_equivalent'] = '0.1'
+                with self.assertRaises((ValidationError, ValueError)):
+                    artifacts.validate_trace(trace, self.manifest, self.rules_hash)
+
+    def test_remediation_boundary_vectors_are_explicit(self):
+        cases = {c['id']: c for c in self.reference['cases']}
+        self.assertEqual(cases['no-prior-close']['inputs']['prior_closes'], [])
+        self.assertEqual(cases['no-prior-close']['expected']['session_start_floors'], ['48000.00'])
+        self.assertEqual(cases['losing-first-close']['expected']['session_start_floors'],
+                         ['48000.00', '48000.00'])
+        self.assertEqual(cases['all-closes-below-initial']['expected']['session_start_floors'],
+                         ['48000.00', '48000.00', '48000.00'])
+        self.assertEqual(cases['official-four-plus-ten']['inputs']['standard_contracts'], 4)
+        self.assertEqual(cases['official-four-plus-ten']['inputs']['mini_contracts'], 0)
+        self.assertEqual(cases['one-micro']['expected']['mini_equivalent'], '0.1')
+        self.assertEqual(cases['one-micro']['decision'], 'lab_convention_pending_ftmo_confirmation')
+
+    def test_dual_consistency_vectors_preserve_distinct_results_and_labels(self):
+        cases = {c['id']: c for c in self.reference['cases']}
+        expected = cases['fees-change-consistency']['expected']
+        self.assertEqual(expected['gross_consistency_share']['share'], '2/5')
+        self.assertEqual(expected['net_of_fees_consistency_share']['share'], '40/99')
+        self.assertTrue(expected['gross_satisfied'])
+        self.assertFalse(expected['net_satisfied'])
+        self.assertEqual(expected['net_of_fees_label'], 'lab_convention_pending_verification')
+        for key in ('gross_consistency_share', 'net_of_fees_consistency_share', 'net_of_fees_label'):
+            reference = copy.deepcopy(self.reference)
+            case = next(c for c in reference['cases'] if c['id'] == 'fees-change-consistency')
+            del case['expected'][key]
+            with self.subTest(missing=key), self.assertRaises(ValidationError):
+                artifacts.validate_references(reference, self.manifest)
+        expected = cases['fees-change-best-day']['expected']
+        self.assertEqual(expected['gross_consistency_share']['best_day'], '1200.00')
+        self.assertEqual(expected['net_of_fees_consistency_share']['best_day'], '1100.00')
+        expected = cases['fees-make-net-total-zero']['expected']
+        self.assertIsNotNone(expected['gross_consistency_share']['share'])
+        self.assertIsNone(expected['net_of_fees_consistency_share']['share'])
+        self.assertEqual(expected['net_of_fees_consistency_share']['reason'], 'nonpositive_total_profit')
 
     def test_session_vectors_match_zoneinfo_across_both_dst_changes(self):
         zone = ZoneInfo('America/New_York')

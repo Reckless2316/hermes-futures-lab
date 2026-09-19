@@ -1,0 +1,53 @@
+schema_version: 1
+id: ftmo-futures-growth-evaluation-50k
+rules_version: 2026-09-18-candidate.3
+supersedes_rules_version: 2026-09-18-candidate.2
+review_status: pending
+stage: evaluation
+product: growth
+currency: USD
+initial_balance: '50000.00'
+profit_target: '3000.00'
+profit_target_comparison: balance_gte_initial_plus_target
+assessment: after_session_close_with_no_open_positions
+drawdown:
+  amount: '2000.00'
+  basis: max(initial_balance, highest_prior_session_closing_balance)
+  when_no_prior_session_close: use_initial_balance
+  update: next_session_start
+  lock_at_initial_balance: true
+  violation_when: equity_lte_limit
+daily_loss: null
+consistency:
+  best_closed_profit_day_max_share: '0.40'
+  outcome_when_exceeded: not_yet_eligible
+  consistency_profit_basis: realized_gross_pnl_minus_all_fees_posted_in_session
+  pending_decision: FTMO_consistency_fee_basis
+  decision_record: ADR-003
+  decision_status: human_accepted_lab_convention
+  decision_on: '2026-09-17'
+  official_semantics_status: unresolved_pending_ftmo_confirmation
+  required_reports:
+    - gross_consistency_share
+    - net_of_fees_consistency_share
+  gross_profit_basis: realized_gross_pnl
+  net_of_fees_label: lab_convention_pending_verification
+  allow_silent_substitution: false
+max_contracts_mini_equivalent: '5.0'
+contract_counting:
+  classes:
+    standard: '1.0'
+    mini: '1.0'
+    micro: '0.1'
+  aggregation: sum_absolute_net_positions_by_contract_times_class_weight
+  fractional_micro_summation: lab_convention_pending_ftmo_confirmation
+  official_semantics_status: unresolved_pending_ftmo_confirmation
+  decision_record: ADR-004
+minimum_trading_days: 0
+trading_day_timezone: America/New_York
+session_start_local: '18:00:00'
+session_close_local: '16:10:00'
+source_url: https://ftmo.com/en/futures/trading-objectives-and-rules/
+comparison_source_url: https://ftmo.com/en/futures/comparison-table/
+verified_on: '2026-09-17'
+effective_at_utc: null

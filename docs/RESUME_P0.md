@@ -1,75 +1,61 @@
-# P0 handoff and resume state
+# P0 remediation handoff and resume state
 
-Updated 2026-09-18 after resuming checkpoint `checkpoint/p0-2026-09-17`.
-**P0 local implementation checks passed; phase acceptance remains pending.**
-The original checkpoint and portable bundle remain unchanged.
+Updated 2026-09-18. Claude PR #2 review gate: **FAIL pending remediation**,
+accepted by the human. Remediation is prepared for re-review; no new Claude
+verdict exists. P0 phase acceptance remains pending. Do not implement P1 or merge.
 
-## Location
+## Location and review target
 
-- Repository: `/home/reckless/projects/hermes-futures-lab`.
 - Worktree: `/home/reckless/projects/hermes-futures-lab/.worktrees/p0-specification`.
-- Branch: `feat/p0-specification`; base planning commit: `22abff4`.
-- Origin: `https://github.com/Reckless2316/hermes-futures-lab.git`.
-- GitHub account verified as `Reckless2316` on 2026-09-18.
-- GitHub now reports **public**, changed from private at the original checkpoint.
-  The human explicitly approved pushing the branch and opening its draft PR
-  publicly on 2026-09-18. Do not ask for that authorization again.
-- P0 tracking issue: https://github.com/Reckless2316/hermes-futures-lab/issues/1.
-  The local REVIEW_PACKET.md records the draft PR URL and frozen head SHA.
+- Branch: `feat/p0-specification`; original planning base: `22abff4`.
+- Remediation base: `3ee851b81912697ea53bed4db4b4b965fb0229bf`.
+- Repository: https://github.com/Reckless2316/hermes-futures-lab (PUBLIC).
+- Issue: https://github.com/Reckless2316/hermes-futures-lab/issues/1.
+- Draft PR: https://github.com/Reckless2316/hermes-futures-lab/pull/2.
+- REVIEW_PACKET.md records the frozen final head, hashes and publication status.
 
-```bash
-cd /home/reckless/projects/hermes-futures-lab/.worktrees/p0-specification
-git status --short
-cat docs/RESUME_P0.md
-```
+The human authorized this remediation, commit/push to the existing branch and
+re-review handoff. Historical publication approval is only a record of that past
+action and never permission for future unrelated actions. Fetch/push URLs and
+the authenticated GitHub account were verified on 2026-09-18 before remediation.
 
-## Completed work
+## Decisions and changes
 
-Read MASTER_BLUEPRINT, GITHUB_WORKFLOW, CODEX_OPERATOR and INSTALL_CHECKLIST.
-Follow P0's separate acceptance gate before implementing P1. No external skills
-or subagents were used. Other repositories and execution systems are untouched.
+- Candidate.1 and candidate.2 remain byte-identical. Candidate.3 encodes the full
+  drawdown basis, empty-history behavior, explicit counting classes, both required
+  consistency reports and unresolved official-semantics labels. Source observation
+  remains 2026-09-17. No candidate is promoted or accepted for evaluation.
+- Standard = 1.0, mini = 1.0, micro = 0.1. Fractional micro summation remains a
+  lab convention pending FTMO confirmation, visibly unresolved in artifacts.
+- P1 must report gross AND net-of-fees consistency shares separately. Net remains
+  the accepted ADR 003 lab convention pending official verification; no silent
+  substitution. Do not ask the human to re-decide the accepted lab fee convention.
+- V3 fixtures contain 51 proposed reference cases and the 13-event synthetic trace.
+  Nine artifact hashes bind all manifests, schemas, fixtures and recipe.
+- Python 3.11.16 and uv 0.12.17 are pinned for validation; pytest is a locked dev
+  dependency, with deterministic test discovery and development-helper imports.
+  README/P0_VALIDATION document `uv sync --locked` and both runners.
+- Public-repository documentation is reconciled. The human selected MIT licensing;
+  LICENSE is included in source and wheel metadata. External materials retain
+  their own terms. See ADR 004 for the complete decision record.
 
-- Package/CLI skeleton, locked development dependencies, data contract, threat
-  model, rules register, ADRs and P0 acceptance record are prepared for review.
-- Historical candidate.1 is byte-identical to the checkpoint. Candidate.2 records
-  the **already accepted** ADR 003 lab convention: realized gross P&L minus all
-  fees posted in the session, including entry fees for positions still open.
-  Do not ask the human to decide that convention again.
-- Schema, 43 reference cases, 13-event synthetic trace and 8 artifact hashes are
-  synchronized. Both candidates await independent review; neither is a promoted
-  ruleset. Official source observation remains 2026-09-17.
-- Fifteen contract/CLI tests passed, with zero skipped. They check fixture
-  contracts and references; they do not prove financial engine outcomes.
-- Offline locked installation, source/wheel build and isolated installed-wheel
-  smoke checks passed. See P0_VALIDATION.md for commands and limitations.
+## Remaining review and acceptance
 
-Use `--cache-dir /tmp/futures-lab-uv-cache` for uv commands in this environment;
-its normal home cache is outside writable roots. The CLI has zero runtime
-dependencies. The `.venv`, build outputs and caches are ignored and disposable.
+Give Claude Desktop REVIEW_PACKET.md and REVIEW_DIFF.txt (remediation base to new
+head), the public PR and affected downstream artifacts per CLAUDE_OPERATOR.md.
+The human requests a focused re-review; a full original 4,379-line reread is
+unnecessary unless foundational P0 assumptions change. No direct Claude Desktop
+connector is available in this session; the prepared packet requires human relay.
+Do not claim it was delivered or independently accepted without evidence.
 
-## Remaining handoff
+Record returned findings on this same branch, then seek human P0 scope/gate
+acceptance. Outstanding official interpretations: consistency fee basis/day
+assignment and fractional micro counting. Session endpoints/assessment ordering,
+real calendars/coverage and account-specific terms also need reconciliation.
+No PASS, merge or P1 authorization is implied by successful local checks.
 
-1. Give Claude Desktop the frozen REVIEW_PACKET.md and REVIEW_DIFF.txt using
-   docs/CLAUDE_OPERATOR.md. The public draft PR is also available via
-   `gh pr view feat/p0-specification --repo Reckless2316/hermes-futures-lab`.
-   Claude has not reviewed this implementation; no findings or approvals exist.
-2. Record returned findings and resolve them on this branch. Update the packet
-   and draft PR to the new head after any fixes, then request independent review.
-3. Obtain human acceptance of 50K Growth Evaluation scope and the P0 gate. Do not
-   merge or begin P1 before acceptance. CI is not configured (scheduled for P1).
-
-The current review packet, when present, is a local gitignored handoff artifact;
-it records the exact frozen head and publication status. No secrets, real account
-records or licensed market data belong in it.
-
-No ledger, financial evaluator, importer, database, network API, plugin or coach
-exists. There is no migration. The CLI reports implementation status and hashes
-explicitly selected local files. The trace checker validates only the authored
-P0 subset; production event processing remains P1 work.
-
-## Suggested next-session instruction
-
-> Read docs/RESUME_P0.md and the local REVIEW_PACKET.md in the P0 worktree.
-> Continue the publication/review handoff on feat/p0-specification, respecting
-> the recorded visibility decision and already accepted ADR 003 convention.
-> Verify origin and account before pushing. Do not bypass P0 acceptance.
+The original checkpoint and bundle remain unchanged. No ledger, evaluator,
+importer, database, network API, plugin, coach or execution connection exists.
+P0 checks validate contracts and authored reference data, not financial outcomes.
+CI remains unconfigured until P1. Use a writable cache such as
+`UV_CACHE_DIR=/tmp/futures-lab-uv-cache` in this environment.

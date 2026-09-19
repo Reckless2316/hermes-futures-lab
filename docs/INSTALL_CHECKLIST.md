@@ -1,10 +1,20 @@
 # Futures Training Lab — install and handoff checklist
 
-**Checked 17 September 2026.** This checklist distinguishes what is already present, what must be created for the project, and what is optional. The blueprint does not require a marketplace bundle, a GitHub connector, or any paid trading-data add-on to begin P0/P1.
+**Historical setup observations: 17 September 2026.** Current update, 2026-09-18:
+the repository exists and is public, with MIT licensing; WSL GitHub CLI is
+authenticated. Skip the historical creation commands below. Follow current
+GITHUB_WORKFLOW.md, RESUME_P0.md and P0_VALIDATION.md for this existing checkout.
+Past setup/publication decisions do not authorize future unrelated actions.
+
+ This checklist distinguishes what is already present, what must be created for the project, and what is optional. The blueprint does not require a marketplace bundle, a GitHub connector, or any paid trading-data add-on to begin P0/P1.
 
 **User-provided research wiki:** The authenticated [AgentWikis HyperFrames XL index](https://agentwikis.com/raw/hyperframes/wiki-xl/index.md) was reachable on 17 September 2026. Check its index before broad web searches and fetch a relevant page when the work concerns HyperFrames, video rendering, motion components, or explainers. The index currently lists no FTMO/futures or operator-product documentation; continue to current official sources for those topics. Hermes CLI already has the wiki access according to the user. Share only relevant excerpts or page references with Codex/Claude; do not replicate the credential across operators. Store any replacement bearer token in a local secret store or transient environment variable, outside the repository and handoff packets.
 
-**GitHub ownership and setup:** The user identified [reckless2316](https://github.com/reckless2316) as their profile. Its public repositories include forks of `hermes-multi-agent-workflow` and `model-trader`. The inspected local workflow checkouts point to the upstream `tonbistudio` remote, and WSL lacks `gh` plus Git commit identity. Follow [`GITHUB_WORKFLOW.md`](GITHUB_WORKFLOW.md) to authenticate the correct account, create a new private `reckless2316/hermes-futures-lab`, and connect separate WSL and Windows clones. Private repos were not visible in this inspection.
+**Current GitHub ownership and setup:** `Reckless2316/hermes-futures-lab` is the
+existing public project repository. WSL GitHub CLI/account verification is in
+place. Preserve the separate upstream-pointed template checkouts. Follow
+GITHUB_WORKFLOW.md for the existing PR branch; do not recreate the repository or
+change visibility based on the superseded private-repository proposal.
 
 ## 1. Current operator installations
 
@@ -37,37 +47,18 @@ Version numbers are observations from this machine, not minimum supported versio
 - **Optional only if direct local-folder review is desired:** Claude Cowork with the lab repository folder explicitly shared, subject to plan availability. It adds file access and should remain read-only by instruction for this review role. [Cowork guide](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork).
 - **No required Claude plugin or desktop extension.** If an MCP integration is later justified, Anthropic’s current route is Claude Desktop **Settings → Extensions** for a desktop extension or the **Customize** directory for skills/plugins/connectors. Install only a reviewed extension with minimal file scope. [Desktop extension guide](https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop), [Claude directory guide](https://support.claude.com/en/articles/14328846-browse-skills-connectors-and-plugins-in-one-directory).
 
-## 3. Prepare the repository
+## 3. Existing repository preparation
 
-Use a **new** repository. The discovered `tonbistudio/hermes-multi-agent-workflow` is a general triage template with local uncommitted changes, while your `reckless2316/hermes-multi-agent-workflow` is a separate fork. Do not repurpose or modify either for the lab. Follow `GITHUB_WORKFLOW.md` to create the new repository under your account.
+The WSL repository, Git identity, origin and root AGENTS.md are already set up.
+Use the current P0 worktree and inspect `git status --short` before changes.
+Read RESUME_P0.md and P0_VALIDATION.md for the phase and locked environment.
+Do not run `git init`, recreate the remote repository or copy over its files.
+The original creation recipe is retained in Git history at 3ee851b.
 
-Run in **Ubuntu WSL**, then copy these six files from the current Codex output folder into `docs/`:
-
-```bash
-mkdir -p /home/reckless/projects/hermes-futures-lab/docs
-cd /home/reckless/projects/hermes-futures-lab
-git init -b main
-cp /mnt/c/Users/lucky/Documents/Codex/2026-09-17/referenced-chatgpt-conversation-this-is-an/outputs/*.md docs/
-```
-
-Continue with `GITHUB_WORKFLOW.md` before the first commit: set the Git identity, create `.gitignore`, authenticate the `reckless2316` account, and create/connect the private GitHub repository.
-
-If a repository with that name already exists when you run this, inspect it first and use the existing history. Do not run `git init` over an unrelated project. Put `AGENTS.md` at the **root** with the stable core/security rules from `CODEX_OPERATOR.md`; keep the full operator file under `docs/`. Run Codex from the WSL home checkout, not `/mnt/c`; this follows [OpenAI’s WSL guidance](https://learn.chatgpt.com/docs/windows/wsl).
-
-Suggested first `AGENTS.md` content:
-
-```markdown
-# Futures Lab repository instructions
-Read docs/MASTER_BLUEPRINT.md and docs/CODEX_OPERATOR.md before changes.
-The deterministic core must run without Hermes or an LLM.
-Never add FTMO credentials, platform control, live order routing, feed timing comparison, or execution-box connectivity.
-Pin rule manifests and record source URL, verified date, and hash in results.
-Use exact money arithmetic and DST-aware America/New_York trading sessions.
-One ticket per branch/worktree; preserve user changes; run the ticket tests and review the diff.
-No licensed raw market data or secrets in Git.
-```
-
-The docs can be committed as the initial planning baseline. Keep `local_data/`, `.env`, auth files, DBs, and review packets with sensitive details out of Git via `.gitignore` from the first commit.
+Keep `local_data/`, `.env`, auth files, databases and local review packets outside
+Git. The public MIT repository must contain only material suitable for public
+redistribution; third-party source/data terms still apply. Windows Hermes uses
+a separate reviewed checkout at the later deployment phase.
 
 ## 4. Pass the instructions to each operator
 
@@ -104,4 +95,5 @@ cd /home/reckless/projects/hermes-futures-lab
 git status --short
 ```
 
-At P1, the final verification command must run the synthetic 50K Growth evaluation and print the manifest hash, event hash, balance/equity, floor, consistency share, and eligibility. Codex will supply that CLI command and its test suite as part of the implementation; this blueprint does not invent an unimplemented command name.
+At P1, the final verification command must run the synthetic 50K Growth evaluation and print the manifest hash, event hash, balance/equity, floor, gross consistency share, net-of-fees consistency share (labelled lab
+convention pending verification), unresolved fractional-micro semantics, and eligibility. Codex will supply that CLI command and its test suite as part of the implementation; this blueprint does not invent an unimplemented command name.
