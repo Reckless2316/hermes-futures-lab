@@ -4,7 +4,13 @@
 
 Read this with `INSTALL_CHECKLIST.md` and `GITHUB_WORKFLOW.md`, then give each operator its own instruction file. The three operators have distinct jobs: Hermes coordinates and presents the product; Codex CLI in WSL builds it; Claude Desktop on Windows independently reviews it. The user resolves product decisions and accepts milestones.
 
-## 1. What was verified on this machine
+Current project update, 2026-09-18: the repository now exists and is **public**,
+with an MIT LICENSE selected by the human. Use GITHUB_WORKFLOW.md and RESUME_P0.md
+for current operations. The machine/setup observations below are historical;
+they do not authorize repository creation or future unrelated actions. PR #2
+remediation is P0 only; no P1 implementation or merge is authorized.
+
+## 1. Historical machine observations (17 September 2026)
 
 | Item | Finding | Consequence |
 |---|---|---|
@@ -13,7 +19,7 @@ Read this with `INSTALL_CHECKLIST.md` and `GITHUB_WORKFLOW.md`, then give each o
 | Claude Desktop | Windows package `Claude 1.52386.6.0` found | Use Claude chat/Projects for review packets. Claude Code is a different product and is not required. |
 | GitHub profile | The public [reckless2316 profile](https://github.com/reckless2316) exists and shows 12 public repositories, all forks, including [hermes-multi-agent-workflow](https://github.com/reckless2316/hermes-multi-agent-workflow) and [model-trader](https://github.com/reckless2316/model-trader) | Private repos and account control were not visible. Confirm WSL GitHub CLI logs into `reckless2316` before creating or pushing. |
 | Relevant local Git checkout | WSL checkouts of `hermes-multi-agent-workflow` still point to `https://github.com/tonbistudio/hermes-multi-agent-workflow` as `origin` and have uncommitted files | These are upstream-pointed triage template checkouts, not the Futures Lab. Preserve them. Their remote can be reconfigured to the matching `reckless2316` fork only after inspecting local changes and divergence. |
-| Futures Lab repository | No local `futures` or `ftmo` repository found in the checked project directories; no public Futures Lab repo was visible on the profile | Create a **new private** `reckless2316/hermes-futures-lab` repository after confirming the account login. Private repositories could not be inspected. |
+| Futures Lab repository | No local `futures` or `ftmo` repository found in the checked project directories; no public Futures Lab repo was visible on the profile | Original proposal: create a private repository. Superseded: the existing Futures Lab repository is public; see current workflow. |
 | GitHub CLI / Git identity | `gh` was absent in WSL and Windows; WSL Git commit name/email were unset | Follow `GITHUB_WORKFLOW.md` to install/authenticate `gh` or use the GitHub web route, set commit identity, and connect `origin`. |
 
 The current [Hermes plugin guide](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/developer-guide/plugins/index.md) describes a Python `plugin.yaml`/`register(ctx)` agent plugin, while the [Desktop SDK](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/developer-guide/desktop-plugin-sdk.md) describes a distinct ESM `desktop/plugin.js` UI surface. A single repository can ship both. The web dashboard plugin API is a separate product surface and is out of scope for v1.
@@ -128,7 +134,7 @@ initial_balance: '50000.00'
 profit_target: '3000.00'
 drawdown:
   amount: '2000.00'
-  basis: highest_prior_session_closing_balance
+  basis: max(initial_balance, highest_prior_session_closing_balance)
   update: next_session_start
   lock_at_initial_balance: true
   violation_when: equity_lte_limit
@@ -137,13 +143,19 @@ consistency:
   best_closed_profit_day_max_share: '0.40'
   outcome_when_exceeded: not_yet_eligible
 max_contracts_mini_equivalent: '5.0'
-micro_to_mini_ratio: '0.1'
+contract_counting:
+  classes: {standard: '1.0', mini: '1.0', micro: '0.1'}
+  fractional_micro_summation: lab_convention_pending_ftmo_confirmation
 minimum_trading_days: 0
 trading_day_timezone: America/New_York
 source_url: https://ftmo.com/en/futures/trading-objectives-and-rules/
 verified_on: '2026-09-17'
 effective_at_utc: null
 ```
+
+This excerpt is illustrative, not a valid full candidate manifest. Candidate.3
+is authoritative for the P0 proposal, including mandatory gross/net consistency
+reports and unresolved official-semantics labels (ADR 004).
 
 `effective_at_utc: null` is intentional: the page does not establish when each numeric rule became effective. Keep the observed/verified date distinct from legal effective date. On each experiment, persist the manifest bytes and SHA-256 hash; changing a rule creates a **new** file/version, never mutates a past evaluation. Maintain `RULES_REGISTER.md` with source URL, retrieved date, screenshots or archived text if permitted, account stage, reviewer, open ambiguities, and superseding version. Reconcile changes against FTMO’s account-specific agreement before promoting a new manifest.
 
@@ -175,7 +187,8 @@ Each phase closes with a release packet: commit/PR link or patch, changed contra
 - **Monte Carlo:** resample dependent blocks (days or sessions) rather than pretending trades are independent; include adverse slippage/fees, changing win rate, and risk per trade. Report pass rate, breach rate, time to target, drawdown quantiles, and confidence intervals with the method, seed, sample count, and data limitations. This is a stress test, not a probability guarantee.
 - **Coach:** read only structured lab summaries and a bounded set of cited journal entries. Separate observed facts from hypotheses. Suggest one practice adjustment at a time and send proposed rule/strategy changes back through the human + review gates.
 
-The cockpit’s first page should show simulated account size, balance/equity, target progress, active drawdown floor and buffer, best-day share, contract-equivalent exposure, current rule status, ruleset hash, and market-data source. Replay adds pause/step/reset and a visible “simulated” banner. Journal and analytics pages show trade evidence and sample counts before coaching text. A failed or disconnected API shows “data unavailable” rather than carrying forward stale financial numbers.
+The cockpit’s first page should show simulated account size, balance/equity, target progress, active drawdown floor and buffer, separate gross and net-of-fees best-day shares (net labelled lab convention
+pending verification), contract-equivalent exposure with unresolved fractional-micro semantics, current rule status, ruleset hash, and market-data source. Replay adds pause/step/reset and a visible “simulated” banner. Journal and analytics pages show trade evidence and sample counts before coaching text. A failed or disconnected API shows “data unavailable” rather than carrying forward stale financial numbers.
 
 ## 7. Test and review strategy
 
@@ -191,15 +204,15 @@ CI on Linux runs formatting, types, unit/property/integration tests, dependency/
 
 ## 8. Branch, worktree, and handoff protocol
 
-Create a dedicated Git repository in WSL under `/home/reckless/projects/hermes-futures-lab` (or a user-chosen WSL home path) and connect `origin` to the new private `reckless2316/hermes-futures-lab` repository. Follow the exact setup and sync steps in `GITHUB_WORKFLOW.md`. Official [Codex WSL guidance](https://learn.chatgpt.com/docs/windows/wsl) recommends keeping code under Linux home rather than `/mnt/c`. Use a separate Windows clone for Hermes. Do not use the existing triage template checkout as the new product’s working tree.
+Use the existing dedicated WSL repository at `/home/reckless/projects/hermes-futures-lab`, connected to public `Reckless2316/hermes-futures-lab`. Follow the exact setup and sync steps in `GITHUB_WORKFLOW.md`. Official [Codex WSL guidance](https://learn.chatgpt.com/docs/windows/wsl) recommends keeping code under Linux home rather than `/mnt/c`. Use a separate Windows clone for Hermes. Do not use the existing triage template checkout as the new product’s working tree.
 
 - Protect `main`; feature work uses `feat/<issue>-<slug>`, fixes `fix/<issue>-<slug>`, docs `docs/<issue>-<slug>`. Each coding task gets its own Git worktree and branch. Never let two agents edit the same worktree concurrently.
 - Hermes creates a task brief with scope, phase, acceptance test, source version, and expected output; Codex implements and produces a PR or patch. Claude reviews **read-only** from a stable commit/diff or `REVIEW_PACKET.md`. Codex addresses findings. The user approves material rule changes and merging.
 - Use a standard handoff packet: `task_id`, base/head commit SHA, ruleset ID/hash, data fixture IDs/hashes, files changed, commands and results, open questions, security changes, reviewer findings and disposition. No secrets or licensed raw data in packets.
-- Create the private GitHub repository for the planning baseline before coding P1, then use Issues and PRs for implementation. Enabling or deploying a Hermes plugin remains a separate decision after the implementation is reviewable.
+- Use the existing public repository and its Issues and draft PRs for authorized work. Enabling or deploying a Hermes plugin remains a separate decision after the implementation is reviewable.
 
 ## 9. Definition of done for v1
 
 From a clean WSL checkout, a user can install the locked package, import synthetic or licensed practice data, run a deterministic 50K Growth Evaluation, inspect why each rule passes/fails, replay a session, see analytics and Monte Carlo assumptions, and open the same state in Hermes Desktop. A disconnected/no-Hermes run gives the same financial result. Claude has reviewed the final implementation and all critical/high findings are resolved. No code path contains FTMO credentials or execution capability.
 
-The first engineering ticket is **P0 and P1 only**. Completing that ticket is evidence that the blueprint can be implemented without letting UI or AI logic corrupt the accounting foundation.
+The current ticket is **P0 only**. P1 begins only after independent re-review and human P0 acceptance; the current remediation does not authorize it.

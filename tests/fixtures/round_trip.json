@@ -1,0 +1,301 @@
+{
+  "schema_version": 1,
+  "fixture_id": "synthetic-round-trip-v3",
+  "provenance": {
+    "id": "synthetic-p0-recipe",
+    "vendor": "project-authored",
+    "dataset_id": "synthetic-round-trip-v3",
+    "input_path": "tests/fixtures/README.md",
+    "input_sha256": "c77ee2f1776759689a0b3c73b4c15584fcb4ef2225ac4815d43af837642717e0",
+    "license": "Synthetic test use and redistribution permitted",
+    "synthetic": true,
+    "original_timezone": "UTC",
+    "adapter_version": "authored-v1",
+    "instrument_spec_ids": [
+      "LAB-MINI-202609"
+    ],
+    "gaps": [],
+    "correction_policy": "append-only; P0 has no correction processing"
+  },
+  "calendar": {
+    "id": "synthetic-weekday-v1",
+    "timezone": "America/New_York",
+    "sessions": [
+      {
+        "session_id": "2026-09-17",
+        "start_utc": "2026-09-16T22:00:00Z",
+        "close_utc": "2026-09-17T20:10:00Z"
+      },
+      {
+        "session_id": "2026-09-18",
+        "start_utc": "2026-09-17T22:00:00Z",
+        "close_utc": "2026-09-18T20:10:00Z"
+      }
+    ]
+  },
+  "events": [
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-001",
+      "event_type": "InstrumentSpec",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-001",
+      "timestamp_utc": "2026-09-17T13:00:00Z",
+      "session_id": "2026-09-17",
+      "sequence": 1,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "instrument_id": "LAB-MINI-202609",
+        "symbol": "LAB-MINI",
+        "venue": "LAB",
+        "currency": "USD",
+        "tick_size": "0.25",
+        "tick_value": "12.50",
+        "multiplier": "50.00",
+        "mini_equivalent": "1.0",
+        "expiry": "2026-09-30",
+        "calendar_id": "synthetic-weekday-v1",
+        "roll_policy": "none",
+        "ftmo_counting_class": "mini"
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-002",
+      "event_type": "RulesetSelected",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-002",
+      "timestamp_utc": "2026-09-17T13:00:00Z",
+      "session_id": "2026-09-17",
+      "sequence": 2,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "ruleset_id": "ftmo-futures-growth-evaluation-50k",
+        "rules_version": "2026-09-18-candidate.3",
+        "ruleset_sha256": "a1dcf3f3ac04abb7c5334bd6e65e9374fc36d67c3422a4b590c3ed3ae8eeeda6"
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-003",
+      "event_type": "OrderIntent",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-003",
+      "timestamp_utc": "2026-09-17T14:00:00Z",
+      "session_id": "2026-09-17",
+      "sequence": 3,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "order_id": "order-buy",
+        "instrument_id": "LAB-MINI-202609",
+        "side": "buy",
+        "quantity": 1,
+        "order_type": "market"
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-004",
+      "event_type": "OrderAccepted",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-004",
+      "timestamp_utc": "2026-09-17T14:00:00Z",
+      "session_id": "2026-09-17",
+      "sequence": 4,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "order_id": "order-buy",
+        "intent_event_id": "synthetic-event-003"
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-005",
+      "event_type": "Fill",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-005",
+      "timestamp_utc": "2026-09-17T14:00:01Z",
+      "session_id": "2026-09-17",
+      "sequence": 5,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "fill_id": "fill-buy",
+        "order_id": "order-buy",
+        "instrument_id": "LAB-MINI-202609",
+        "side": "buy",
+        "quantity": 1,
+        "price": "100.00"
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-006",
+      "event_type": "Commission",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-006",
+      "timestamp_utc": "2026-09-17T14:00:01Z",
+      "session_id": "2026-09-17",
+      "sequence": 6,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "fill_id": "fill-buy",
+        "amount": "2.50",
+        "currency": "USD"
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-007",
+      "event_type": "MarketEvent",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-007",
+      "timestamp_utc": "2026-09-17T14:01:00Z",
+      "session_id": "2026-09-17",
+      "sequence": 7,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "instrument_id": "LAB-MINI-202609",
+        "kind": "trade",
+        "price": "101.00",
+        "volume": 1
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-008",
+      "event_type": "PositionMark",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-008",
+      "timestamp_utc": "2026-09-17T14:01:00Z",
+      "session_id": "2026-09-17",
+      "sequence": 8,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "instrument_id": "LAB-MINI-202609",
+        "price": "101.00",
+        "market_event_id": "synthetic-event-007"
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-009",
+      "event_type": "OrderIntent",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-009",
+      "timestamp_utc": "2026-09-17T14:02:00Z",
+      "session_id": "2026-09-17",
+      "sequence": 9,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "order_id": "order-sell",
+        "instrument_id": "LAB-MINI-202609",
+        "side": "sell",
+        "quantity": 1,
+        "order_type": "market"
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-010",
+      "event_type": "OrderAccepted",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-010",
+      "timestamp_utc": "2026-09-17T14:02:00Z",
+      "session_id": "2026-09-17",
+      "sequence": 10,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "order_id": "order-sell",
+        "intent_event_id": "synthetic-event-009"
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-011",
+      "event_type": "Fill",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-011",
+      "timestamp_utc": "2026-09-17T14:02:01Z",
+      "session_id": "2026-09-17",
+      "sequence": 11,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "fill_id": "fill-sell",
+        "order_id": "order-sell",
+        "instrument_id": "LAB-MINI-202609",
+        "side": "sell",
+        "quantity": 1,
+        "price": "102.00"
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-012",
+      "event_type": "Commission",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-012",
+      "timestamp_utc": "2026-09-17T14:02:01Z",
+      "session_id": "2026-09-17",
+      "sequence": 12,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "fill_id": "fill-sell",
+        "amount": "2.50",
+        "currency": "USD"
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "synthetic-event-013",
+      "event_type": "SessionClose",
+      "account_id": "lab-synthetic-50k",
+      "source": "synthetic-p0",
+      "source_event_id": "row-013",
+      "timestamp_utc": "2026-09-17T20:10:00Z",
+      "session_id": "2026-09-17",
+      "sequence": 13,
+      "provenance_id": "synthetic-p0-recipe",
+      "payload": {
+        "calendar_id": "synthetic-weekday-v1"
+      }
+    }
+  ],
+  "expected_checkpoints": [
+    {
+      "after_event_id": "synthetic-event-006",
+      "balance": "49997.50",
+      "unrealized": "0.00",
+      "equity": "49997.50",
+      "floor": "48000.00",
+      "open_positions": 1
+    },
+    {
+      "after_event_id": "synthetic-event-008",
+      "balance": "49997.50",
+      "unrealized": "50.00",
+      "equity": "50047.50",
+      "floor": "48000.00",
+      "open_positions": 1
+    },
+    {
+      "after_event_id": "synthetic-event-013",
+      "balance": "50095.00",
+      "unrealized": "0.00",
+      "equity": "50095.00",
+      "floor": "48000.00",
+      "open_positions": 0
+    }
+  ]
+}

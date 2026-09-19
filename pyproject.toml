@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hermes-futures-lab"
+version = "0.0.1"
+description = "Deterministic, local futures practice lab: P0 specification skeleton"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = []
+
+[project.scripts]
+futures-lab = "futures_lab.cli:main"
+
+[dependency-groups]
+dev = ["jsonschema==4.25.1", "PyYAML==6.0.3", "pytest==8.4.2"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/futures_lab"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.uv]
+required-version = "==0.12.17"
+build-constraint-dependencies = [
+  "hatchling==1.27.0",
+  "packaging==26.3",
+  "pathspec==1.1.1",
+  "pluggy==1.6.0",
+  "trove-classifiers==2026.6.1.19",
+]

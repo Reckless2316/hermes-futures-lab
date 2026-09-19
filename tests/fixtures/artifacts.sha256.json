@@ -1,0 +1,11 @@
+{
+  "rules/ftmo_futures_growth_evaluation_50k_2026-09-17.yaml": "c835db6b7f455c7df4a246827ab77653f94a0dc4af92c25ec20634fd826ea750",
+  "rules/schema.json": "9a8981f183e49921b43d807bfe60acd434f397d7ed12170b6cb967ae1f5446cd",
+  "tests/fixtures/README.md": "c77ee2f1776759689a0b3c73b4c15584fcb4ef2225ac4815d43af837642717e0",
+  "tests/fixtures/growth_50k_reference.json": "21136f1b69d8478628bd98fc211ca5a42146bbd1357e6f4a080896911156fc50",
+  "tests/fixtures/round_trip.json": "bd2715b93a86b6960375686aa049e37fee269bec5a38763d12c7472c3450853f",
+  "tests/fixtures/trace.schema.json": "80843cfd411d24d31dfd958c6a31d27ba17d0a39d306cba2897de649232c9788",
+  "tests/fixtures/reference.schema.json": "8c2c7272a3176ddf04ad1b9d1fec8b8ccbe60ae5aa6f94dba8238e9456360779",
+  "rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.2.yaml": "2da332b5627dee4585555e7af9cc375d8b1ab65107dba54b4c17d538b71179eb",
+  "rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.3.yaml": "a1dcf3f3ac04abb7c5334bd6e65e9374fc36d67c3422a4b590c3ed3ae8eeeda6"
+}

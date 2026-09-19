@@ -1,0 +1,33 @@
+schema_version: 1
+id: ftmo-futures-growth-evaluation-50k
+rules_version: 2026-09-17-candidate.1
+review_status: pending
+stage: evaluation
+product: growth
+currency: USD
+initial_balance: '50000.00'
+profit_target: '3000.00'
+profit_target_comparison: balance_gte_initial_plus_target
+assessment: after_session_close_with_no_open_positions
+drawdown:
+  amount: '2000.00'
+  basis: highest_prior_session_closing_balance
+  update: next_session_start
+  lock_at_initial_balance: true
+  violation_when: equity_lte_limit
+daily_loss: null
+consistency:
+  best_closed_profit_day_max_share: '0.40'
+  outcome_when_exceeded: not_yet_eligible
+  consistency_profit_basis: null
+  pending_decision: ADR-003
+max_contracts_mini_equivalent: '5.0'
+micro_to_mini_ratio: '0.1'
+minimum_trading_days: 0
+trading_day_timezone: America/New_York
+session_start_local: '18:00:00'
+session_close_local: '16:10:00'
+source_url: https://ftmo.com/en/futures/trading-objectives-and-rules/
+comparison_source_url: https://ftmo.com/en/futures/comparison-table/
+verified_on: '2026-09-17'
+effective_at_utc: null
