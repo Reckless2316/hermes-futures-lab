@@ -22,12 +22,14 @@ deployments or merges. Follow the current task's authorized scope.
 | Human | Material rule interpretation, scope acceptance and final merge decision |
 
 P0 issue: [#1](https://github.com/Reckless2316/hermes-futures-lab/issues/1).
-Draft PR: [#2](https://github.com/Reckless2316/hermes-futures-lab/pull/2).
+PR: [#2](https://github.com/Reckless2316/hermes-futures-lab/pull/2).
 Branch: `feat/p0-specification`; worktree:
 `/home/reckless/projects/hermes-futures-lab/.worktrees/p0-specification`.
-Claude gate: **FAIL pending remediation**, accepted by the human. The current
-request authorizes remediation, commit/push to this existing branch and re-review
-handoff. It explicitly prohibits P1 implementation and merging PR #2.
+Claude focused remediation re-review: **PASS**; human P0 scope accepted on
+2026-09-19 at `2384d549424f3897438059bc84796b65401116b0`, as reported by the
+human. See P0_ACCEPTANCE.md for the two non-blocking Medium findings carried into
+P1. The current request authorizes this documentation/status commit and push only;
+it prohibits P1 implementation and merging PR #2.
 
 ## Work and publish within the ticket scope
 
@@ -48,18 +50,20 @@ in URLs, shell commands, packets or Git. Do not alter existing template remotes.
 
 Run the phase's documented validation, inspect the diff, stage specific reviewed
 paths and commit. Push the existing topic branch with `git push origin
-feat/p0-specification`. Keep PR #2 draft. Prepare its exact multiline body in the
+feat/p0-specification`. PR #2 is open and ready for review as of 2026-09-19;
+preserve its current review state and leave it unmerged. Prepare its exact multiline body in the
 ignored `PR_BODY.md` and use `gh pr edit 2 --body-file PR_BODY.md`. New authorized
 tickets use draft PRs; do not create a duplicate PR for remediation.
 
-## Frozen review handoff
+## Historical remediation review handoff (completed)
 
 Record full base/head SHAs, candidate/fixture hashes, exact validation commands,
 results, limitations and the actual review disposition. For this remediation,
 use `3ee851b81912697ea53bed4db4b4b965fb0229bf` as the diff base. The original
 planning base remains `22abff4a8760b17ee838ec95f51e83f13f9f0631`.
 
-Claude should inspect the remediation diff and affected downstream artifacts.
+Claude reviewed the remediation diff and affected downstream artifacts and
+returned PASS, reported by the human on 2026-09-19. The handoff scope was:
 A full 4,379-line reread is unnecessary unless foundational P0 assumptions change.
 Provide the public PR plus REVIEW_PACKET.md and REVIEW_DIFF.txt; when Desktop
 cannot receive them directly, give the human a ready-to-paste handoff. Never
@@ -69,7 +73,7 @@ returned findings and fix them on the same branch before another re-review.
 ## Acceptance, storage and future gates
 
 The human owns merge decisions. Do not merge PR #2 or start P1 during this
-remediation. After a separately accepted merge, sync the WSL and Windows clones
+status update. After a separately accepted merge, sync the WSL and Windows clones
 through GitHub, preserving local changes. Deploy only a reviewed accepted build
 at the appropriate phase; a pushed draft is not deployment approval.
 

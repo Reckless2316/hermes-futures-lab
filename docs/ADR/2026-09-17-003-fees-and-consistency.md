@@ -1,7 +1,9 @@
 # ADR 003: Commission accounting and daily consistency
 
 Date: 2026-09-17. Status: **human accepted the proposed lab convention**;
-independent review pending.
+P0 focused remediation re-review PASS and human scope accepted 2026-09-19.
+See P0_ACCEPTANCE.md for the accepted HEAD. Official fee semantics remain
+unverified; the lab convention is unchanged.
 Source: [FTMO Futures rules](https://ftmo.com/en/futures/trading-objectives-and-rules/),
 Growth / Evaluation / Consistency, retrieved 2026-09-17.
 
@@ -26,12 +28,13 @@ reach the target separately; this vector isolates the consistency objective.
 Human decision, 2026-09-17, in this implementation session:
 “Accept the proposed net-of-fees convention for the lab”. The proposed convention
 above is therefore accepted for lab accounting. This is not verification of
-account-specific FTMO terms. Independent review remains required.
+account-specific FTMO terms. P0 focused remediation re-review subsequently
+returned PASS on 2026-09-19, as recorded in P0_ACCEPTANCE.md.
 
 Historical candidate.2 implementation record, 2026-09-18: candidate.1 remains byte-identical to the
 checkpoint. New `2026-09-18-candidate.2` records this lab convention and the human
 decision date. Its external source observation remains 2026-09-17 and independent
-review remains pending. The schema, active trace, reference decision metadata and
+review was then pending. The schema, active trace, reference decision metadata and
 artifact inventory then referred to candidate.2. Reviewed promotion must create a
 new file/version; neither candidate is an accepted evaluation ruleset.
 

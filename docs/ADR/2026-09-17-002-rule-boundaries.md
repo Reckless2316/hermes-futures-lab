@@ -1,6 +1,8 @@
 # ADR 002: Rule boundaries and assessment timing
 
-Date: 2026-09-17. Status: proposed specification for independent review.
+Date: 2026-09-17. Status: accepted P0 specification, 2026-09-19; Claude focused
+remediation re-review PASS. See P0_ACCEPTANCE.md for the accepted HEAD and P1
+requirements; official-source uncertainties below remain unresolved.
 Source: [FTMO Futures rules](https://ftmo.com/en/futures/trading-objectives-and-rules/),
 Growth / Evaluation / 50K, retrieved 2026-09-17. See RULES_REGISTER for provenance.
 

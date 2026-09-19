@@ -1,7 +1,8 @@
 # P0 remediation validation — 2026-09-18
 
-Local remediation checks passed. Claude's accepted **FAIL pending remediation**
-gate awaits independent re-review; human P0 acceptance remains pending. No P1
+Local remediation checks passed. Final P0 acceptance was recorded on 2026-09-19:
+Claude focused remediation re-review PASS and human scope accepted for
+`2384d549424f3897438059bc84796b65401116b0`. See P0_ACCEPTANCE.md. No P1
 financial implementation or CI exists. Both runners exercise the same 20 tests,
 not 40 independent tests. All passed; zero skipped.
 
@@ -87,5 +88,30 @@ remediation is not a fresh FTMO source or account-terms verification.
 No database or migration, financial evaluator, property/integration engine tests,
 CI, dependency audit or automated secret scan was introduced or claimed to pass.
 The public diff was inspected for source scope, credentials, raw data and execution
-connectivity. Independent re-review and unresolved official interpretations are
+connectivity. The completed independent re-review and unresolved official interpretations are
 listed in RULES_REGISTER and ADR 004. Original validation remains in Git at 3ee851b.
+
+## Acceptance-status validation — 2026-09-19
+
+The documentation-only acceptance update reran the complete P0 gate from the
+P0 worktree using Python 3.11.16 and uv 0.12.17. Existing development environment
+and cache were reused; the fresh-checkout evidence above remains historical.
+All commands below passed. No tests were skipped.
+
+| Command | Result |
+| --- | --- |
+| `uv sync --locked --cache-dir /tmp/futures-lab-uv-cache` | Passed; lock unchanged |
+| `uv run --locked --offline --cache-dir /tmp/futures-lab-uv-cache python -m unittest discover -s tests -v` | 20 tests OK (1.946s) |
+| `uv run --locked --offline --cache-dir /tmp/futures-lab-uv-cache pytest -q` | 20 passed (2.00s) |
+| `uv run --locked --offline --cache-dir /tmp/futures-lab-uv-cache python scripts/verify_p0_artifacts.py` | Three manifest schemas, nine hashes and fixture links passed |
+| `uv build --offline --cache-dir /tmp/futures-lab-uv-cache` | Source distribution and wheel built |
+| `uv venv /tmp/p0-acceptance-20260919-40mcut6e/venv --python 3.11.16 --cache-dir /tmp/futures-lab-uv-cache` | Fresh isolated wheel environment created |
+| `uv pip install --python /tmp/p0-acceptance-20260919-40mcut6e/venv/bin/python --offline --no-deps --cache-dir /tmp/futures-lab-uv-cache dist/hermes_futures_lab-0.0.1-py3-none-any.whl` | Wheel installed with no dependencies |
+| Installed `futures-lab status` and isolated `python -I` import/metadata checks from the temporary directory | Specification-only CLI works; site-packages import, no runtime dependencies, MIT metadata/license verified |
+| `git diff --check` and exact-byte comparisons against accepted HEAD `2384d549424f3897438059bc84796b65401116b0` | Passed; all three candidate files match, with SHA-256 values listed above |
+
+The unchanged CLI still emits its original literal
+`pending_external_review_and_human_scope_approval`. Runtime code/tests are outside
+this documentation-only update; P0_ACCEPTANCE.md records the actual accepted gate.
+Immutable candidate metadata also remains unchanged. No P1 implementation or
+manifest promotion is implied by these validation results.

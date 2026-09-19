@@ -1,6 +1,9 @@
 # Rules register
 
-Observed 2026-09-17 by Codex; independent review: **Claude gate FAIL; remediation re-review pending**.
+Observed 2026-09-17 by Codex. **P0 accepted 2026-09-19:** Claude focused re-review
+PASS and human scope acceptance at `2384d549424f3897438059bc84796b65401116b0`,
+as reported by the human. See P0_ACCEPTANCE.md for the two non-blocking Medium
+findings recorded as mandatory P1 requirements.
 Scope: FTMO Futures **Growth / Evaluation / 50K**, USD. Pro, CFD and Sim-Funded
 are separate products/stages and are not supported by this candidate.
 
@@ -28,7 +31,9 @@ eligibility. See ADR 002 for the proposed boundary contract.
 Active file: `rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.3.yaml`.
 ID: `ftmo-futures-growth-evaluation-50k`.
 Version: `2026-09-18-candidate.3`. Supersedes: `2026-09-18-candidate.2`.
-Review status: pending. Created 2026-09-18 for ADR 004 remediation decisions;
+Immutable manifest `review_status`: pending (unchanged). P0 specification review
+and scope acceptance are complete; this does not promote an evaluation manifest.
+Created 2026-09-18 for ADR 004 remediation decisions;
 source observation remains 2026-09-17, not a new source verification.
 
 Historical candidate.1 (`rules/ftmo_futures_growth_evaluation_50k_2026-09-17.yaml`)
@@ -64,15 +69,18 @@ exposure examples include 4 standard + 10 micro and 2 mini + 30 micro.
   convention; examples involving whole groups of ten do not verify partial-group
   rounding/counting. The one-micro, mixed-class and 51-micro vectors carry that
   unresolved status. Do not call those outcomes FTMO-verified.
-- **Scope acceptance:** 50K Evaluation; human phase acceptance remains pending.
-- **Independent review:** human accepted Claude's FAIL gate and supplied ADR 004
-  remediation decisions. Re-review pending; no PASS or GitHub approval claimed.
+- **Scope acceptance:** human accepted P0 / 50K Evaluation scope on 2026-09-19.
+- **Independent review:** Claude focused remediation re-review PASS at the HEAD
+  recorded above, reported by the human on 2026-09-19. No GitHub account approval
+  is claimed. The previous FAIL gate is superseded; P1 requirements are recorded
+  in P0_ACCEPTANCE.md.
 - **Calendar and endpoints:** ADR 002's exact-close quarantine and assessment
   ordering remain proposed lab boundaries. Supply a pinned session/holiday
   schedule and reconcile real source endpoints before real-data use.
 - **Coverage and terms:** no market data or account-specific terms verified;
   source effective date unknown. Sparse marks cannot establish continuous equity
-  compliance. Candidates remain pending until reconciliation and acceptance.
+  compliance. Manifest promotion remains pending source/terms reconciliation; P0 acceptance
+  does not alter immutable candidate metadata.
 
 House risk limits will live in a separate practice-policy file, labelled house
 rules. No house policy or evaluator is implemented in P0.

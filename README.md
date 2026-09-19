@@ -4,11 +4,14 @@ A local futures practice and research lab. The standalone Python core will
 reconstruct synthetic or user-supplied practice events without Hermes or an LLM.
 The initial scope is **50K FTMO Futures Growth Evaluation**.
 
-**P0 review gate: FAIL pending remediation re-review; acceptance pending.** This version provides a CLI
+**P0 accepted 2026-09-19: Claude focused re-review PASS; human scope accepted.** This version provides a CLI
 skeleton, data contract, candidate rules manifest, threat model, decision records
 and synthetic reference cases. It does not calculate P&L or evaluation status.
 The fee convention is human-accepted for the lab, pending FTMO verification.
-Claude re-review and human scope acceptance are required before P1. See [P0 acceptance](docs/P0_ACCEPTANCE.md).
+Acceptance applies to `2384d549424f3897438059bc84796b65401116b0`.
+The two non-blocking Medium findings are recorded as P1 requirements in
+[P0 acceptance](docs/P0_ACCEPTANCE.md). This status update does not begin P1 or
+authorize merging PR #2.
 
 ## Run from this checkout
 

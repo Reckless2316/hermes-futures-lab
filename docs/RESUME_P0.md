@@ -1,8 +1,9 @@
 # P0 remediation handoff and resume state
 
-Updated 2026-09-18. Claude PR #2 review gate: **FAIL pending remediation**,
-accepted by the human. Remediation is prepared for re-review; no new Claude
-verdict exists. P0 phase acceptance remains pending. Do not implement P1 or merge.
+Updated 2026-09-19. **P0 accepted:** Claude focused remediation re-review returned
+**PASS** and the human accepted P0 scope on 2026-09-19, for implementation HEAD
+`2384d549424f3897438059bc84796b65401116b0`. The human supplied this review
+disposition. This documentation/status update does not authorize P1 or merge.
 
 ## Location and review target
 
@@ -11,12 +12,13 @@ verdict exists. P0 phase acceptance remains pending. Do not implement P1 or merg
 - Remediation base: `3ee851b81912697ea53bed4db4b4b965fb0229bf`.
 - Repository: https://github.com/Reckless2316/hermes-futures-lab (PUBLIC).
 - Issue: https://github.com/Reckless2316/hermes-futures-lab/issues/1.
-- Draft PR: https://github.com/Reckless2316/hermes-futures-lab/pull/2.
-- REVIEW_PACKET.md records the frozen final head, hashes and publication status.
+- PR: https://github.com/Reckless2316/hermes-futures-lab/pull/2.
+- REVIEW_PACKET.md preserves the historical remediation handoff;
+  P0_ACCEPTANCE.md records the final PASS, human acceptance and P1 requirements.
 
-The human authorized this remediation, commit/push to the existing branch and
-re-review handoff. Historical publication approval is only a record of that past
-action and never permission for future unrelated actions. Fetch/push URLs and
+The human authorized recording final P0 acceptance, complete validation, and
+commit/push of this documentation-only update to the existing branch. Historical
+publication approval is only a record of that past action and never permission for future unrelated actions. Fetch/push URLs and
 the authenticated GitHub account were verified on 2026-09-18 before remediation.
 
 ## Decisions and changes
@@ -39,20 +41,21 @@ the authenticated GitHub account were verified on 2026-09-18 before remediation.
   LICENSE is included in source and wheel metadata. External materials retain
   their own terms. See ADR 004 for the complete decision record.
 
-## Remaining review and acceptance
+## Accepted gate and P1 handoff requirements
 
-Give Claude Desktop REVIEW_PACKET.md and REVIEW_DIFF.txt (remediation base to new
-head), the public PR and affected downstream artifacts per CLAUDE_OPERATOR.md.
-The human requests a focused re-review; a full original 4,379-line reread is
-unnecessary unless foundational P0 assumptions change. No direct Claude Desktop
-connector is available in this session; the prepared packet requires human relay.
-Do not claim it was delivered or independently accepted without evidence.
+P0_ACCEPTANCE.md is the acceptance record for the reviewed implementation HEAD.
+Claude's two non-blocking Medium findings are mandatory P1 requirements:
 
-Record returned findings on this same branch, then seek human P0 scope/gate
-acceptance. Outstanding official interpretations: consistency fee basis/day
-assignment and fractional micro counting. Session endpoints/assessment ordering,
+- Do not treat the drawdown basis expression-string as executable semantics;
+  candidate.3's explicit formula is authoritative.
+- Candidate.3 `contract_counting` is authoritative; legacy
+  `max_contracts_mini_equivalent` must not become a competing implementation rule.
+
+The accepted P0 gate does not resolve official consistency fee basis/day
+assignment or fractional micro counting. Session endpoints/assessment ordering,
 real calendars/coverage and account-specific terms also need reconciliation.
-No PASS, merge or P1 authorization is implied by successful local checks.
+All three candidate files remain immutable and unpromoted. No P1 implementation
+or merge is authorized by this status update.
 
 The original checkpoint and bundle remain unchanged. No ledger, evaluator,
 importer, database, network API, plugin, coach or execution connection exists.
