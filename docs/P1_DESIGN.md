@@ -113,6 +113,13 @@ their posting session, including open-position entry fees, under ADR 003's lab
 convention. Aggregate lab eligibility uses the net view and labels that choice.
 Official fee/day-assignment semantics remain unresolved.
 
+When the two views disagree on `satisfied`, `data_quality_reasons` includes
+`consistency_basis_divergence`. This explains dependence on the consistency basis;
+it does not classify the input as corrupted or claim an FTMO breach/disqualification.
+It is appended after aggregate-state selection, so it does not change the authorized
+net-based lab state or the missing-data/breach precedence below. Consumers must
+inspect the reason alongside both views, including when state is `eligible_estimate`.
+
 State precedence is:
 
 1. Known drawdown contact → `breached` (recorded lab drawdown, not an assertion that

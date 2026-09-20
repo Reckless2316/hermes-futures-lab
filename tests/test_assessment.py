@@ -101,6 +101,55 @@ class AssessmentTests(unittest.TestCase):
         self.assertEqual(result["evaluation_mode"], "candidate_3_lab_estimate")
         self.assertFalse(result["official_account_certification"])
         self.assertEqual(result["gross_consistency_share"]["share"], "2/5")
+        self.assertEqual(result["data_quality_reasons"], [])
+
+    def test_target_met_gross_pass_net_fail_explains_basis_divergence(self):
+        # Smaller days bear fees: the best day stays 1300 while total falls to 3160.
+        result = evaluate(
+            multi_day(["1300.00", "1000.00", "1000.00"], ["0.00", "70.00", "70.00"])
+        )["report"]
+        self.assertEqual(result["balance"], "53160.00")
+        self.assertTrue(result["target_condition_met"])
+        self.assertTrue(result["gross_consistency_share"]["satisfied"])
+        self.assertFalse(result["net_of_fees_consistency_share"]["satisfied"])
+        self.assertEqual(result["gross_consistency_share"]["share"], "13/33")
+        self.assertEqual(result["net_of_fees_consistency_share"]["share"], "65/158")
+        self.assertEqual(result["state"], "not_yet_eligible")
+        self.assertEqual(
+            result["data_quality_reasons"], ["consistency_basis_divergence"]
+        )
+        self.assertFalse(result["drawdown_breached"])
+        self.assertEqual(result["breach_evidence_event_ids"], [])
+        self.assertEqual(result["quarantine"], [])
+        self.assertEqual(result["valuation_gaps"], [])
+        self.assertFalse(result["official_account_certification"])
+        self.assertEqual(
+            result["net_of_fees_label"], "lab_convention_pending_verification"
+        )
+
+    def test_target_met_gross_fail_net_pass_explains_basis_divergence(self):
+        # Fees on the best day reduce its share: 1400/3400 becomes 1200/3200.
+        result = evaluate(
+            multi_day(["1400.00", "1000.00", "1000.00"], ["200.00", "0.00", "0.00"])
+        )["report"]
+        self.assertEqual(result["balance"], "53200.00")
+        self.assertTrue(result["target_condition_met"])
+        self.assertFalse(result["gross_consistency_share"]["satisfied"])
+        self.assertTrue(result["net_of_fees_consistency_share"]["satisfied"])
+        self.assertEqual(result["gross_consistency_share"]["share"], "7/17")
+        self.assertEqual(result["net_of_fees_consistency_share"]["share"], "3/8")
+        self.assertEqual(result["state"], "eligible_estimate")
+        self.assertEqual(
+            result["data_quality_reasons"], ["consistency_basis_divergence"]
+        )
+        self.assertFalse(result["drawdown_breached"])
+        self.assertEqual(result["breach_evidence_event_ids"], [])
+        self.assertEqual(result["quarantine"], [])
+        self.assertEqual(result["valuation_gaps"], [])
+        self.assertFalse(result["official_account_certification"])
+        self.assertEqual(
+            result["net_of_fees_label"], "lab_convention_pending_verification"
+        )
 
     def test_fees_change_share_without_silent_gross_substitution(self):
         d = multi_day(["1200.00", "900.00", "900.00"], ["0.00", "0.00", "30.00"])

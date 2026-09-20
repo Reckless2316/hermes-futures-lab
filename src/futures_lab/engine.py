@@ -401,6 +401,10 @@ class Engine:
             state = "eligible_estimate"
         else:
             state = "not_yet_eligible"
+        # Explain interpretation dependence without changing the authorized state.
+        # Divergence is neither corrupted input nor an FTMO breach determination.
+        if gross_view["satisfied"] != net_view["satisfied"]:
+            reasons.append("consistency_basis_divergence")
         return {
             "schema_version": 1,
             "phase": "P1",
