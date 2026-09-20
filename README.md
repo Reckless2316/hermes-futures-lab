@@ -1,17 +1,21 @@
 # Futures Lab
 
-A local futures practice and research lab. The standalone Python core will
+A local futures practice and research lab. The standalone Python core can
 reconstruct synthetic or user-supplied practice events without Hermes or an LLM.
 The initial scope is **50K FTMO Futures Growth Evaluation**.
 
-**P0 accepted 2026-09-19: Claude focused re-review PASS; human scope accepted.** This version provides a CLI
-skeleton, data contract, candidate rules manifest, threat model, decision records
-and synthetic reference cases. It does not calculate P&L or evaluation status.
-The fee convention is human-accepted for the lab, pending FTMO verification.
-Acceptance applies to `2384d549424f3897438059bc84796b65401116b0`.
-The two non-blocking Medium findings are recorded as P1 requirements in
-[P0 acceptance](docs/P0_ACCEPTANCE.md). This status update does not begin P1 or
-authorize merging PR #2.
+**P1 human-accepted at `fe7c1ba1b263ad6b0b897997116cd7bb982537ca`.** See
+[P1 acceptance](docs/P1_ACCEPTANCE.md) for review evidence and merge authorization. The core
+reconstructs recorded fills, fees, FIFO positions, balance/equity and session rule
+state with exact Decimal arithmetic. [P0 acceptance](docs/P0_ACCEPTANCE.md) is
+complete; P1 starts at its merge `4740732d1ff4dfff3d0e9ebb042c08a8f6545a59`.
+
+[ADR 005](docs/ADR/2026-09-19-005-p1-evaluation-status-decisions.md) authorizes
+explicitly labelled candidate.3 lab eligibility estimates while preserving its
+pending manifest status. Net-of-fees consistency and fractional micro summation
+remain lab conventions pending FTMO confirmation. Observed excess exposure
+withholds eligibility pending an accepted consequence; it does not invent an FTMO
+disqualification. All three historical candidates remain immutable.
 
 ## Run from this checkout
 
@@ -21,25 +25,30 @@ validated development environment. Run from the repository root:
 ```bash
 uv sync --locked
 uv run --locked futures-lab status
+uv run --locked futures-lab evaluate tests/fixtures/round_trip.json
 uv run --locked futures-lab fingerprint rules/ftmo_futures_growth_evaluation_50k_2026-09-18_candidate.3.yaml
 uv run --locked python scripts/verify_p0_artifacts.py
 uv run --locked python -m unittest discover -s tests -v
 uv run --locked pytest -q
-uv build
+uv build --no-sources
+uv run --locked python scripts/smoke_wheel.py
 ```
 
-See [clean-environment validation](docs/P0_VALIDATION.md), including cache and
-isolated-environment instructions. Both runners execute the same tests.
+See [P1 validation](docs/P1_VALIDATION.md) for the complete clean-environment gate,
+and [P1 design](docs/P1_DESIGN.md) for inputs, outputs and limitations. Both runners
+execute the same tests; the accepted P0 artifact suite remains part of that gate.
 
 This repository is **public** and licensed under [MIT](LICENSE), selected by the
 human on 2026-09-18. External source material and licensed market data retain
 their own terms; the repository license grants no rights to those materials.
 
-The installed CLI uses only the Python standard library. Test dependencies and
-the build backend are pinned; `uv.lock` records transitive dependencies. Initial
+The installed CLI uses Python and pinned PyYAML to load hash-approved candidate
+bytes. The domain uses only the standard library. Test dependencies and the build
+backend are pinned; `uv.lock` records transitive dependencies. Initial
 environment setup downloads packages; subsequent tests and CLI use no network.
 The `fingerprint` command hashes bytes without validating or evaluating them.
-Errors return exit code 2; successful commands return one stable JSON object.
+Invalid files/commands return exit code 2. A parsed evaluation with insufficient
+data returns explicit `data_unavailable` JSON; it never estimates missing money.
 
 ## Contracts and review
 
@@ -51,5 +60,5 @@ Errors return exit code 2; successful commands return one stable JSON object.
 - [Operator workflow](docs/CODEX_OPERATOR.md): implementation and review handoff.
 
 Runtime data belongs under ignored `local_data/`. This lab has no execution or
-FTMO account connection. Future rule reports are estimates from recorded events;
+FTMO account connection. Rule reports are estimates from recorded events;
 FTMO determines actual account standing.

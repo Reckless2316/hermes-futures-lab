@@ -24,7 +24,13 @@ implementation checks do not replace Claude review or human acceptance.
 
 - The repository is public and MIT-licensed. Historical authorization text is a
   record of its specific action, never permission for future unrelated actions.
-- Current PR #2 remediation is P0 only: preserve candidate.1/candidate.2 bytes,
-  use candidate.3, retain unresolved official fee/fractional-micro semantics,
-  and require separate gross/net consistency reports in P1. Do not begin P1 or
-  merge PR #2 during remediation; obtain Claude re-review and human acceptance.
+- Current ticket is Issue #3, P1 deterministic ledger and Growth rule engine,
+  starting from merged P0 at `4740732d1ff4dfff3d0e9ebb042c08a8f6545a59`.
+  Preserve candidate.1/.2/.3 bytes. ADR 005 authorizes labelled candidate.3 lab
+  estimates and withholds eligibility after observed excess exposure until its
+  consequence is resolved. Gross/net fees and fractional micros retain lab labels.
+  Follow Issue #3's Futures-only hygiene; invent no qualitative-policy thresholds.
+  P1 is human-accepted at `fe7c1ba1b263ad6b0b897997116cd7bb982537ca`.
+  The human explicitly authorized PR #4 merge and Issue #3 closure after the final
+  documentation-only status update and merge gate; see docs/P1_ACCEPTANCE.md.
+  This specific authorization does not start candidate.4, GUI or another phase.

@@ -43,7 +43,10 @@ explicitly uses `max(initial_balance, highest_prior_session_closing_balance)`.
 No prior close means initial balance. Apply the trailing amount and initial-balance
 lock only at next session start, as ADR 002 already specifies.
 The schema validates each version independently and rejects mixed-version fields.
-All candidates are unpromoted and must not be used for eligibility calculations.
+All candidates remain unpromoted. Human-accepted ADR 005 (2026-09-19) permits
+candidate.3-only labelled **lab eligibility estimates**, preserving its pending
+metadata and hash. This explicit exception does not authorize official account
+certification or eligibility calculations with candidate.1/.2.
 Exact hashes appear in `tests/fixtures/artifacts.sha256.json` and the review packet.
 
 Freeze original UTF-8 bytes and their hash in every later experiment. A changed
@@ -84,3 +87,34 @@ exposure examples include 4 standard + 10 micro and 2 mini + 30 micro.
 
 House risk limits will live in a separate practice-policy file, labelled house
 rules. No house policy or evaluator is implemented in P0.
+
+## P1 authority and policy coverage
+
+Issue #3 and ADR 005 govern P1. Candidate.3's explicit formula is implemented in
+ordinary deterministic code; its `basis` expression is descriptive data only.
+`contract_counting` supplies the sole class weights. The legacy cap scalar is read
+once as the numeric exposure limit, never as a second counting algorithm.
+Recorded excess exposure retains its evidence and withholds eligibility pending
+authoritative consequences (`MANUAL_REVIEW`), even after reduction or flattening.
+
+| Policy group | P1 classification and handling |
+| --- | --- |
+| Accepted drawdown, target, consistency and contract counting | DETERMINISTIC calculations under accepted lab conventions; exposure consequence remains MANUAL_REVIEW |
+| Service/pricing/update-error exploitation; external/slow-feed exploitation | NOT_IMPLEMENTED_P1; DATA_UNAVAILABLE for adjudication from the ledger alone |
+| Manipulative/coordinated trading; coordinated opposite positions across accounts/providers; trading for another participant | NOT_IMPLEMENTED_P1; MANUAL_REVIEW, with cross-account data unavailable |
+| Applicable FTMO/platform terms violations; third-party account access or trading | NOT_IMPLEMENTED_P1; MANUAL_REVIEW, identity and terms evidence unavailable |
+| Prohibited gap trading or scheduled-event-dependent practices | NOT_IMPLEMENTED_P1; DATA_UNAVAILABLE for event definitions, calendar, affected instruments and prohibited-window semantics |
+| Artificial profit distribution to circumvent the Best Day Rule | NOT_IMPLEMENTED_P1; MANUAL_REVIEW; arithmetic consistency is not an intent detector |
+| Abnormal position sizing/counts; cumulative Risk per Trade Idea; correlated-symbol exposure; overleveraging/overexposure | NOT_IMPLEMENTED_P1; MANUAL_REVIEW; no invented numerical thresholds or trade-idea grouping |
+| One-sided bets; account rolling; behavior not reasonably replicable in real markets | NOT_IMPLEMENTED_P1; MANUAL_REVIEW; insufficient semantics/context for deterministic adjudication |
+| Conservative training risk, micros, daily stops, frequency and revenge-sizing guidance | Separate LAB/TRAINING policy; NOT_IMPLEMENTED_P1 and never an FTMO breach condition |
+
+These are concepts supplied in Issue #3, not newly verified account terms. Their
+presence here does not claim automated detection. Reports explicitly state that
+qualitative compliance is not implemented. No full compliance engine is in P1.
+
+No blanket ±2-minute news rule, CFD Standard/Swing holding restriction, generic
+weekend rule, universal 1%/1.5% risk disqualifier, or numerical interpretation of
+“small positions”/“don't overtrade” is implemented. Use accepted Futures session
+semantics only. News/gap-policy semantics remain unresolved; no invented calendars,
+instrument mappings, volatility thresholds or disqualification tests are supplied.

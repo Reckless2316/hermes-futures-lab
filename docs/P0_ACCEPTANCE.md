@@ -70,4 +70,9 @@ property, integration and boundary tests, plus required CI/security checks.
 
 Report hashes and limitations for every evaluation. Refuse a pending manifest
 for eligibility calculation. Use a new reviewed manifest after human decisions.
+
+P1 addendum, 2026-09-19: human-accepted [ADR 005](ADR/2026-09-19-005-p1-evaluation-status-decisions.md)
+creates an explicit exception for labelled candidate.3 lab eligibility estimates.
+The original P0 gate above remains historical; candidate bytes and pending metadata
+remain unchanged. This is not official FTMO verification or P1 acceptance.
 No UI, network API, historical import, replay engine or AI coach in this ticket.
