@@ -12,15 +12,15 @@ class CliTests(unittest.TestCase):
         return subprocess.run([sys.executable, '-m', 'futures_lab', *map(str, args)],
                               capture_output=True, text=True, check=False, timeout=10)
 
-    def test_status_is_stable_and_does_not_claim_financial_evaluation(self):
+    def test_status_is_stable_and_does_not_claim_p1_acceptance(self):
         first, second = self.run_cli('status'), self.run_cli('status')
         self.assertEqual(first.returncode, 0)
         self.assertEqual(first.stderr, '')
         self.assertEqual(first.stdout, second.stdout)
         report = json.loads(first.stdout)
-        self.assertFalse(report['evaluation_available'])
-        self.assertEqual(report['implementation'], 'specification_only')
-        self.assertEqual(report['acceptance'], 'pending_external_review_and_human_scope_approval')
+        self.assertTrue(report['evaluation_available'])
+        self.assertEqual(report['implementation'], 'deterministic_financial_engine')
+        self.assertEqual(report['acceptance'], 'p1_pending_independent_review_and_human_acceptance')
 
     def test_fingerprint_hashes_exact_bytes(self):
         with tempfile.TemporaryDirectory() as folder:

@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "hermes-futures-lab"
 version = "0.0.1"
-description = "Deterministic, local futures practice lab: P0 specification skeleton"
+description = "Deterministic local futures ledger and candidate Growth lab evaluator"
 requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -15,7 +15,15 @@ dependencies = ["PyYAML==6.0.3"]
 futures-lab = "futures_lab.cli:main"
 
 [dependency-groups]
-dev = ["jsonschema==4.25.1", "PyYAML==6.0.3", "pytest==8.4.2"]
+dev = [
+    "jsonschema==4.25.1",
+    "PyYAML==6.0.3",
+    "pytest==9.0.3",
+    "ruff==0.13.0",
+    "mypy==1.18.1",
+    "pip-audit==2.9.0",
+    "detect-secrets==1.5.0",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/futures_lab"]
