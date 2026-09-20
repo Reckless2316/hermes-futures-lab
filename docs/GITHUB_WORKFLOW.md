@@ -21,15 +21,16 @@ deployments or merges. Follow the current task's authorized scope.
 | Hermes Desktop | Separate Windows clone of an accepted build; product/ticket coordination |
 | Human | Material rule interpretation, scope acceptance and final merge decision |
 
-P0 issue: [#1](https://github.com/Reckless2316/hermes-futures-lab/issues/1).
-PR: [#2](https://github.com/Reckless2316/hermes-futures-lab/pull/2).
-Branch: `feat/p0-specification`; worktree:
-`/home/reckless/projects/hermes-futures-lab/.worktrees/p0-specification`.
-Claude focused remediation re-review: **PASS**; human P0 scope accepted on
-2026-09-19 at `2384d549424f3897438059bc84796b65401116b0`, as reported by the
-human. See P0_ACCEPTANCE.md for the two non-blocking Medium findings carried into
-P1. The current request authorizes this documentation/status commit and push only;
-it prohibits P1 implementation and merging PR #2.
+Current ticket: [#3](https://github.com/Reckless2316/hermes-futures-lab/issues/3),
+P1 deterministic ledger and Growth rule engine. Branch:
+`feat/p1-deterministic-engine`; worktree:
+`/home/reckless/projects/hermes-futures-lab/.worktrees/p1-deterministic-engine`.
+P0 issue #1 / PR #2 are complete and merged at
+`4740732d1ff4dfff3d0e9ebb042c08a8f6545a59`, the verified P1 starting point.
+Claude P0 remediation re-review PASS and human acceptance on 2026-09-19 remain
+historical P0 evidence; they do not accept P1. ADR 005 records the human's two
+P1 evaluation-status decisions. The current task authorizes P1 implementation,
+commits, push and a draft PR, with independent review and human acceptance pending.
 
 ## Work and publish within the ticket scope
 
@@ -49,11 +50,14 @@ Both URLs must identify `Reckless2316/hermes-futures-lab`; the login must be
 in URLs, shell commands, packets or Git. Do not alter existing template remotes.
 
 Run the phase's documented validation, inspect the diff, stage specific reviewed
-paths and commit. Push the existing topic branch with `git push origin
-feat/p0-specification`. PR #2 is open and ready for review as of 2026-09-19;
-preserve its current review state and leave it unmerged. Prepare its exact multiline body in the
-ignored `PR_BODY.md` and use `gh pr edit 2 --body-file PR_BODY.md`. New authorized
-tickets use draft PRs; do not create a duplicate PR for remediation.
+paths and commit. Push this topic with `git push origin feat/p1-deterministic-engine`.
+Prepare the exact multiline body in ignored `PR_BODY.md`, then create a **draft**
+PR against main using `gh pr create --draft --base main --head
+feat/p1-deterministic-engine --body-file PR_BODY.md` plus a descriptive title.
+Do not merge. Freeze P1 review evidence over the full range from
+`4740732d1ff4dfff3d0e9ebb042c08a8f6545a59` to the implementation HEAD. New P1
+code and affected downstream contracts need independent review; the old focused
+P0 remediation scope does not limit review of this new implementation.
 
 ## Historical remediation review handoff (completed)
 
@@ -72,8 +76,8 @@ returned findings and fix them on the same branch before another re-review.
 
 ## Acceptance, storage and future gates
 
-The human owns merge decisions. Do not merge PR #2 or start P1 during this
-status update. After a separately accepted merge, sync the WSL and Windows clones
+The human owns merge decisions. Do not merge the P1 PR. After a separately
+accepted merge, sync the WSL and Windows clones
 through GitHub, preserving local changes. Deploy only a reviewed accepted build
 at the appropriate phase; a pushed draft is not deployment approval.
 
@@ -82,7 +86,7 @@ raw data, secrets, `.env`, databases and local review packets ignored. Ignore
 rules do not remove existing history; inspect staged files before every public
 push. MIT covers project-owned code/docs, not third-party sources or market data.
 
-CI and automated security checks are scheduled for P1, not configured in P0.
+P1 introduces `.github/workflows/validation.yml` and documented security checks.
 Require passing checks and reviews when introduced; never infer CI success from
 local tests. Preserve other repositories, especially the upstream-pointed
 `tonbistudio` template checkouts, and the separation from execution systems.

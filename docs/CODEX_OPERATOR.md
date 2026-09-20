@@ -38,10 +38,12 @@ You are the **primary implementation engineer** for the standalone Futures Train
 
 ## Build order and tests
 
-Follow P0 through P7 in the master blueprint. The current **P0 ticket** establishes package layout, `DATA_CONTRACT.md`,
-`RULES_REGISTER.md`, candidate manifests/schema and synthetic contracts. The
-immutable ledger, rules evaluator and financial demonstration are P1 work,
-prohibited until P0 re-review and human acceptance. Current remediation is P0 only. Do not jump to UI or AI coaching.
+Follow P0 through P7 in the master blueprint. P0 is accepted and merged. Current
+Issue #3 authorizes **P1 deterministic ledger and Growth rule engine** only, from
+the accepted P0 contracts and ADR 005's human decisions. Read P1_DESIGN.md and
+P1_VALIDATION.md. Preserve all candidate bytes and the mandatory P0 review findings.
+The issue's Futures-only hygiene overrides broader roadmap suggestions; no full
+compliance engine, training guardrails, UI or AI coaching is authorized here.
 
 At minimum, the first implementation must prove: exact drawdown floor contact fails; the floor updates only from a preceding session closing balance and locks at initial balance; commissions and unrealized P&L affect equity; a target is not deemed passed with open positions; the 40% best-day ratio delays eligibility; the Evaluation has no FTMO daily-loss rule; max exposure counts ten micros as one mini; a DST transition does not split the wrong trading day. Use FTMO’s [current Futures rule page](https://ftmo.com/en/futures/trading-objectives-and-rules/) as the golden source and record the retrieval date.
 

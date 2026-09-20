@@ -4,11 +4,13 @@
 
 Read this with `INSTALL_CHECKLIST.md` and `GITHUB_WORKFLOW.md`, then give each operator its own instruction file. The three operators have distinct jobs: Hermes coordinates and presents the product; Codex CLI in WSL builds it; Claude Desktop on Windows independently reviews it. The user resolves product decisions and accepts milestones.
 
-Current project update, 2026-09-18: the repository now exists and is **public**,
-with an MIT LICENSE selected by the human. Use GITHUB_WORKFLOW.md and RESUME_P0.md
-for current operations. The machine/setup observations below are historical;
-they do not authorize repository creation or future unrelated actions. PR #2
-remediation is P0 only; no P1 implementation or merge is authorized.
+Current project update, 2026-09-19: P0 is accepted and merged at
+`4740732d1ff4dfff3d0e9ebb042c08a8f6545a59`. Issue #3 now authorizes P1's
+deterministic ledger and Growth engine. Its Futures-only hygiene and ADR 005
+control this ticket; the broader roadmap below does not expand P1 into a risk,
+training or compliance engine. Use GITHUB_WORKFLOW.md and P1_DESIGN.md for current
+operations. The repository is public and MIT-licensed. Historical setup and
+authorization text does not grant permission for unrelated actions.
 
 ## 1. Historical machine observations (17 September 2026)
 
@@ -215,4 +217,4 @@ Use the existing dedicated WSL repository at `/home/reckless/projects/hermes-fut
 
 From a clean WSL checkout, a user can install the locked package, import synthetic or licensed practice data, run a deterministic 50K Growth Evaluation, inspect why each rule passes/fails, replay a session, see analytics and Monte Carlo assumptions, and open the same state in Hermes Desktop. A disconnected/no-Hermes run gives the same financial result. Claude has reviewed the final implementation and all critical/high findings are resolved. No code path contains FTMO credentials or execution capability.
 
-The current ticket is **P0 only**. P1 begins only after independent re-review and human P0 acceptance; the current remediation does not authorize it.
+The current ticket is **P1, Issue #3**. P0 is complete. P1 implementation requires independent Claude review and human acceptance before merge; later roadmap phases are not authorized by this ticket.

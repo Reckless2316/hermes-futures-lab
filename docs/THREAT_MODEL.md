@@ -35,3 +35,34 @@ is public: every committed artifact must be suitable for public disclosure.
 Operational response: quarantine disputed input, retain original hashes and
 evidence, invalidate dependent projections, and review a new version. Never
 silently repair a past result or present a stale result as current.
+
+## P1 control implementation (2026-09-19)
+
+The P0 baseline above remains historical. P1 adds local normalized JSON input →
+immutable journal → disposable financial projection → JSON lab report. No service,
+database, credential store, platform adapter or network runtime is added. Domain
+code is standard-library-only. The outer rules loader uses pinned PyYAML, after
+matching the exact candidate.3 hash; the basis expression is never executable.
+
+JSON is bounded to 32 MiB / 10,000 events, rejects duplicate keys/nonfinite values,
+and validates event fields before application. Unknown/correction/conflicting
+events quarantine; money never uses floats or rounding guesses. Original event
+identity, canonical bytes, input hashes and rejected-event evidence remain visible.
+Code/data/calendar/tzdb/rules provenance prevents silent reuse across versions.
+Marks only establish observations at recorded instants; absent coverage blocks
+eligibility without erasing a known drawdown breach. ADR 005 explicitly labels
+pending-candidate estimates and withholds unresolved exposure consequences.
+
+P1 tests include hostile types, malformed timestamps, calendar underflow, exact
+boundaries, altered Decimal context, idempotency, immutable snapshots and accounting
+conservation. P1 CI pins Actions, uses read-only contents permission, runs locked
+tests/static checks/build/isolated-wheel smoke, audits locked dependencies, and scans
+tracked files for credential patterns offline. Entropy heuristics are excluded
+because hash evidence is pervasive; this limitation and manual diff inspection
+remain part of the gate. Advisory lookup is separate from offline financial tests.
+
+No claim is made that declared provenance authenticates a vendor, sparse marks
+certify continuous compliance, or qualitative forbidden practices are adjudicated.
+No host/network isolation change is made. Local-machine compromise, malicious
+dependency installation, system tzdb drift, and later deployment remain residual
+risks; calendar/tzdb identifiers expose reproducibility dependencies.
