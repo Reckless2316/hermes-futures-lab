@@ -3,8 +3,9 @@
 Reviewed HEAD: `52606daadcfe662161623e02612973ce32494dc7` (PR #4).
 Claude disposition, reported by the human: **PASS WITH REQUIRED FOLLOW-UP**;
 0 Critical, 0 High, 0 blocking fixes before merge. The human requested MED-P1-1
-before P1 acceptance/merge. This change awaits focused Claude re-review and human
-acceptance; it does not claim either has occurred.
+before P1 acceptance/merge. The human subsequently accepted remediation HEAD
+`fe7c1ba1b263ad6b0b897997116cd7bb982537ca` and authorized the final merge gate
+and merge. See P1_ACCEPTANCE.md; no separate focused Claude disposition is invented.
 
 ## Change
 

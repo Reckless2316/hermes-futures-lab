@@ -217,4 +217,7 @@ Use the existing dedicated WSL repository at `/home/reckless/projects/hermes-fut
 
 From a clean WSL checkout, a user can install the locked package, import synthetic or licensed practice data, run a deterministic 50K Growth Evaluation, inspect why each rule passes/fails, replay a session, see analytics and Monte Carlo assumptions, and open the same state in Hermes Desktop. A disconnected/no-Hermes run gives the same financial result. Claude has reviewed the final implementation and all critical/high findings are resolved. No code path contains FTMO credentials or execution capability.
 
-The current ticket is **P1, Issue #3**. P0 is complete. P1 implementation requires independent Claude review and human acceptance before merge; later roadmap phases are not authorized by this ticket.
+P1, Issue #3, is human-accepted at `fe7c1ba1b263ad6b0b897997116cd7bb982537ca`.
+The human authorized its final documentation/validation gate and merge; see
+P1_ACCEPTANCE.md. Candidate.4, GUI implementation and later phases remain separate
+work and are not authorized by this merge.

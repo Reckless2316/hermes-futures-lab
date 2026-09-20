@@ -29,8 +29,10 @@ P0 issue #1 / PR #2 are complete and merged at
 `4740732d1ff4dfff3d0e9ebb042c08a8f6545a59`, the verified P1 starting point.
 Claude P0 remediation re-review PASS and human acceptance on 2026-09-19 remain
 historical P0 evidence; they do not accept P1. ADR 005 records the human's two
-P1 evaluation-status decisions. The current task authorizes P1 implementation,
-commits, push and a draft PR, with independent review and human acceptance pending.
+P1 evaluation-status decisions. The human has now accepted implementation HEAD
+`fe7c1ba1b263ad6b0b897997116cd7bb982537ca` and explicitly authorized final
+status documentation, validation, PR #4 readiness/merge and Issue #3 closure.
+See P1_ACCEPTANCE.md for the actual review disposition and remaining interpretations.
 
 ## Work and publish within the ticket scope
 
@@ -51,13 +53,13 @@ in URLs, shell commands, packets or Git. Do not alter existing template remotes.
 
 Run the phase's documented validation, inspect the diff, stage specific reviewed
 paths and commit. Push this topic with `git push origin feat/p1-deterministic-engine`.
-Prepare the exact multiline body in ignored `PR_BODY.md`, then create a **draft**
-PR against main using `gh pr create --draft --base main --head
-feat/p1-deterministic-engine --body-file PR_BODY.md` plus a descriptive title.
-Do not merge. Freeze P1 review evidence over the full range from
-`4740732d1ff4dfff3d0e9ebb042c08a8f6545a59` to the implementation HEAD. New P1
-code and affected downstream contracts need independent review; the old focused
-P0 remediation scope does not limit review of this new implementation.
+PR #4 already exists. Update its evidence using the exact multiline body in ignored
+`PR_BODY.md`; do not create another PR. Verify the final status commit changes only
+documentation from the accepted HEAD, run the complete P1 gate and require green
+CI on that exact commit. Under the human's explicit authorization, mark PR #4
+ready, merge with an expected-HEAD check, close Issue #3 and report the merge SHA
+and final main HEAD. Do not bypass protection rules. Preserve the full P1 and
+focused remediation review evidence. No candidate.4 or GUI work belongs in this merge.
 
 ## Historical remediation review handoff (completed)
 
@@ -76,10 +78,10 @@ returned findings and fix them on the same branch before another re-review.
 
 ## Acceptance, storage and future gates
 
-The human owns merge decisions. Do not merge the P1 PR. After a separately
-accepted merge, sync the WSL and Windows clones
-through GitHub, preserving local changes. Deploy only a reviewed accepted build
-at the appropriate phase; a pushed draft is not deployment approval.
+The human owns merge decisions and has authorized this specific P1 merge after
+its gate. Sync the local WSL main by fast-forward after the merge, preserving
+local changes. Windows deployment remains a separate concern; this merge
+authorization does not grant deployment or unrelated future merge permission.
 
 Store only code, docs, synthetic fixtures and sanitized evidence in Git. Keep
 raw data, secrets, `.env`, databases and local review packets ignored. Ignore

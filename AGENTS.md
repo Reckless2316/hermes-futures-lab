@@ -30,4 +30,7 @@ implementation checks do not replace Claude review or human acceptance.
   estimates and withholds eligibility after observed excess exposure until its
   consequence is resolved. Gross/net fees and fractional micros retain lab labels.
   Follow Issue #3's Futures-only hygiene; invent no qualitative-policy thresholds.
-  P1 requires independent Claude review and human acceptance; do not merge.
+  P1 is human-accepted at `fe7c1ba1b263ad6b0b897997116cd7bb982537ca`.
+  The human explicitly authorized PR #4 merge and Issue #3 closure after the final
+  documentation-only status update and merge gate; see docs/P1_ACCEPTANCE.md.
+  This specific authorization does not start candidate.4, GUI or another phase.

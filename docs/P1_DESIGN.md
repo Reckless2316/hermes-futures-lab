@@ -2,7 +2,8 @@
 
 Ticket: [Issue #3](https://github.com/Reckless2316/hermes-futures-lab/issues/3).
 Base: `4740732d1ff4dfff3d0e9ebb042c08a8f6545a59` (merged P0).
-Status: implementation pending independent Claude review and human acceptance.
+Status: human-accepted at `fe7c1ba1b263ad6b0b897997116cd7bb982537ca`;
+see P1_ACCEPTANCE.md for the review record and authorized final merge gate.
 Human-accepted [ADR 005](ADR/2026-09-19-005-p1-evaluation-status-decisions.md)
 permits labelled candidate.3 lab estimates and withholds eligibility after observed
 excess exposure without inventing permanent failure. P0 ADRs 001–004 otherwise

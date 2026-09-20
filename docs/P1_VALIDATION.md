@@ -38,5 +38,7 @@ Actions. Credential scanning is offline, tracked-file pattern detection with
 entropy heuristics excluded; inspect the complete staged diff as well.
 
 Final frozen results, full HEAD SHA, changed-file inventory and review range are
-recorded in the local ignored REVIEW_PACKET.md and the P1 draft PR. Independent
-Claude review and human P1 acceptance remain pending.
+recorded in the local ignored REVIEW_PACKET.md and PR #4. The human accepted
+implementation HEAD `fe7c1ba1b263ad6b0b897997116cd7bb982537ca` and authorized
+the final documentation update and merge gate; see P1_ACCEPTANCE.md. Run the
+complete gate on the documentation HEAD and require successful CI before merge.

@@ -4,7 +4,8 @@ A local futures practice and research lab. The standalone Python core can
 reconstruct synthetic or user-supplied practice events without Hermes or an LLM.
 The initial scope is **50K FTMO Futures Growth Evaluation**.
 
-**P1 implementation: awaiting independent review and human acceptance.** The core
+**P1 human-accepted at `fe7c1ba1b263ad6b0b897997116cd7bb982537ca`.** See
+[P1 acceptance](docs/P1_ACCEPTANCE.md) for review evidence and merge authorization. The core
 reconstructs recorded fills, fees, FIFO positions, balance/equity and session rule
 state with exact Decimal arithmetic. [P0 acceptance](docs/P0_ACCEPTANCE.md) is
 complete; P1 starts at its merge `4740732d1ff4dfff3d0e9ebb042c08a8f6545a59`.
